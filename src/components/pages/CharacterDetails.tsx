@@ -1,4 +1,4 @@
-import arrow from '../../assets/arrow.png';
+import arrow from '../../assets/images/arrow.png';
 import { Link } from 'react-router-dom';
 import { Loading } from '../loading/Loading';
 import './CharacterDetails.css';

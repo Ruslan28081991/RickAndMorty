@@ -14,7 +14,8 @@
   font-weight: 700;
 }
 
-.loading_small .loading_image {
+.loading_small 
+.loading_image {
   width: 103px;
   height: 101px;
 }

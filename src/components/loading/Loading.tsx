@@ -1,6 +1,10 @@
-import loading from '../../assets/loading.png';
-import type { ILoading } from '../interfaces/Interfaces';
+import loading from '../../assets/images/loading.png';
 import './Loading.css';
+
+interface ILoading {
+  text?: string;
+  size?: 'small' | 'large';
+}
 
 export const Loading = ({ text, size = 'large' }: ILoading) => {
   const rootClass = `loading loading_${size}`;
