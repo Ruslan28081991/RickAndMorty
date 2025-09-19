@@ -1,16 +1,14 @@
 .characters {
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 .characters_img {
   width: 600px;
   height: 200px;
-  position: absolute;
-  top: 86px;
-  left: 420px;
 }
 
 .characters_container {
-  margin-bottom: 250px;
+  margin-bottom: 50px;
 }
