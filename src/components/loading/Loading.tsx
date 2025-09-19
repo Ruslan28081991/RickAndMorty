@@ -1,4 +1,5 @@
 import loading from '../../assets/images/loading.png';
+import cn from 'classnames'
 import './Loading.css';
 
 interface ILoading {
@@ -7,9 +8,8 @@ interface ILoading {
 }
 
 export const Loading = ({ text, size = 'large' }: ILoading) => {
-  const rootClass = `loading loading_${size}`;
   return (
-    <div className={rootClass}>
+    <div className={cn('loading', `loading_${size}`)}>
       <img
         className='loading_image'
         src={loading}
