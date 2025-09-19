@@ -1,0 +1,13 @@
+.details_container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 21px;
+  width: 110px;
+  text-decoration: none;
+  color: black;
+}
+
+.details_container_text {
+  font-family: 'Karla', sans-serif;
+}

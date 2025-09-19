@@ -1,1 +1,9 @@
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0px;
+  padding: 0px;
+}
 
+#root {
+  margin: 0 auto;
+}
