@@ -1,6 +1,7 @@
+import './CharactersList.css';
+
 import title from '../../assets/images/title.png';
 import { Loading } from '../loading/Loading';
-import './CharactersList.css';
 
 export const CharactersList = () => {
   return (

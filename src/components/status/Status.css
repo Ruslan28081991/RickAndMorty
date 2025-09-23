@@ -1,0 +1,19 @@
+.status {
+  margin-left: 5px;
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.green {
+  background-color: #12b800;
+}
+
+.red {
+  background-color: #df0000;
+}
+
+.orange {
+  background-color: #ff9900;
+}

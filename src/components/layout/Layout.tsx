@@ -1,8 +1,11 @@
-import { Routes, Route } from 'react-router-dom';
-import { Header } from '../header/Header';
+import './Layout.css';
+
+import { Route, Routes } from 'react-router-dom';
+
 import { Footer } from '../footer/Footer';
-import { CharactersList } from '../pages/CharactersList';
+import { Header } from '../header/Header';
 import { CharacterDetails } from '../pages/CharacterDetails';
+import { CharactersList } from '../pages/CharactersList';
 
 export const Layout = () => {
   return (

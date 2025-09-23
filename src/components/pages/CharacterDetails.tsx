@@ -1,7 +1,9 @@
-import arrow from '../../assets/images/arrow.png';
-import { Link } from 'react-router-dom';
-import { Loading } from '../loading/Loading';
 import './CharacterDetails.css';
+
+import { Link } from 'react-router-dom';
+
+import arrow from '../../assets/images/arrow.png';
+import { Loading } from '../loading/Loading';
 
 export const CharacterDetails = () => {
   return (

@@ -1,0 +1,79 @@
+.custom-select {
+  position: relative;
+  width: 260px;
+  font-family: 'Roboto', sans-serif;
+}
+
+.custom-select__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 240px;
+  height: 55px;
+  border: 1px solid #393939;
+  padding: 0 10px;
+  border-radius: 6px;
+  background: #fff;
+  color: #00000099;
+}
+
+.custom-select__arrow {
+  border: none;
+  background: url('../../assets/images/arrowDown.svg') no-repeat center;
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+}
+
+.custom-select__arrow_open {
+  background: url('../../assets/images/arrowUp.svg') no-repeat center;
+}
+
+.custom-select__header .placeholder {
+  color: #00000099;
+}
+
+.custom-select__list {
+  width: 100%;
+  border: 1px solid #393939;
+  border-radius: 6px;
+  padding: 4px 0;
+  margin: 0;
+  z-index: 1;
+}
+
+.custom-select__item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  color: #00000099;
+}
+
+.custom-select__item:hover {
+  background: #f0f0f0;
+}
+
+.custom-select__header_small {
+  width: 100px;
+  height: 21px;
+  padding: 2px 5px;
+  font-size: 14px;
+}
+
+.custom-select__arrow_small {
+  background: url('../../assets/images/arrowDownSmall.svg') no-repeat center;
+}
+
+.custom-select__arrow_open_small {
+  background: url('../../assets/images/arrowUpSmall.svg') no-repeat center;
+}
+
+.custom-select__list_small {
+  width: 110px;
+}
+
+.custom-select__item_small {
+  padding: 5px;
+}

@@ -1,6 +1,8 @@
-import loading from '../../assets/images/loading.png';
-import cn from 'classnames'
 import './Loading.css';
+
+import cn from 'classnames';
+
+import loading from '../../assets/images/loading.png';
 
 interface ILoading {
   text?: string;
