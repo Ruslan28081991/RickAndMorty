@@ -1,4 +1,4 @@
-.details_container {
+.details-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -8,6 +8,6 @@
   color: black;
 }
 
-.details_container_text {
+.details-container__text {
   font-family: 'Karla', sans-serif;
 }

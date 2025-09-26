@@ -26,7 +26,14 @@ export default tseslint.config([
       'import': importPlugin,
     },
     rules: {
-      'simple-import-sort/imports': 'error',
+      'simple-import-sort/imports': ['error', {
+        groups: [
+          ['^react', '^@?\\w'],
+          ['^(@|src)(/.*|$)'],
+          ['^\\.'],
+          ['^.+\\.s?css$']
+        ]
+      }],
       'simple-import-sort/exports': 'error',
       'import/first': 'error',
       'import/newline-after-import': 'error',

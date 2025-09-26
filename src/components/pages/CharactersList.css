@@ -4,11 +4,11 @@
   align-items: center;
 }
 
-.characters_img {
-  width: 600px;
-  height: 200px;
+.characters-container {
+  margin-bottom: 50px;
 }
 
-.characters_container {
-  margin-bottom: 50px;
+.characters-container__img {
+  width: 600px;
+  height: 200px;
 }

@@ -1,81 +1,115 @@
-import './Select.css';
-
+import { useEffect, useRef, useState } from 'react';
 import cn from 'classnames';
-import { useState } from 'react';
 
 import { Status } from '../status/Status';
 
+import './Select.css';
+
 interface IOptions {
-  value: string;
-  label: string;
+  readonly value: string;
+  readonly label: string;
 }
 
 interface ISelect {
-  size?: 'small';
-  options?: IOptions[];
+  size?: 'default' | 'small';
+  value?: string;
+  options?: readonly IOptions[];
   placeholder?: string;
   withStatus?: boolean;
+  onChange?: (value: string) => void;
 }
 
-export const Select = ({ size, options, placeholder, withStatus }: ISelect) => {
+export const Select = ({
+  size,
+  options,
+  value,
+  placeholder,
+  withStatus,
+  onChange,
+}: ISelect) => {
   const [open, setOpen] = useState<boolean>(false);
   const [selected, setSelected] = useState<IOptions | null>(null);
+  const selectRef = useRef<HTMLDivElement>(null);
 
   const handleSelect = (option: IOptions) => {
     setSelected(option);
     setOpen(false);
+    onChange?.(option.value);
   };
 
+  const selectedIsStatus =
+    !!selected &&
+    (selected.label === 'Alive' ||
+      selected.label === 'Dead' ||
+      selected.label === 'Unknown');
+
+  useEffect(() => {
+    if (!value) {
+      setSelected(null);
+      return;
+    }
+    const findValue = options?.find((opt) => opt.value === value) || null;
+    setSelected(findValue);
+  }, [value, options]);
+
   return (
-    <div className='custom-select'>
+    <div className='select'>
       <div
-        className={cn(
-          'custom-select__header',
-          { 'custom-select__open': open },
-          `custom-select__header_${size}`
-        )}
+        className={cn('select__header', {
+          select__open: open,
+          select__header_small: size == 'small',
+        })}
         onClick={() => setOpen((prev) => !prev)}
+        ref={selectRef}
       >
         {selected ? (
-          <div>
+          <div className='select__wrapper'>
             <span>{selected.label}</span>
-            {withStatus && (
-              <Status status={selected.label as 'Alive' | 'Dead' | 'Unknown'} />
+            {withStatus && selectedIsStatus && (
+              <Status status={selected.label} />
             )}
           </div>
         ) : (
-          <span className='custom-select__placeholder'>{placeholder}</span>
+          <span>{placeholder}</span>
         )}
         <button
-          className={cn(
-            'custom-select__arrow',
-            size && `custom-select__arrow_${size}`,
-            open && 'custom-select__arrow_open',
-            open && size && `custom-select__arrow_open_${size}`
-          )}
+          className={cn('select__arrow', {
+            select__arrow_open: open,
+            select__arrow_small: size == 'small',
+            select__arrow_open_small: open && size == 'small',
+          })}
           aria-label='Toggle select'
         />
       </div>
 
       {open && (
         <ul
-          className={cn('custom-select__list', `custom-select__list_${size}`)}
+          className={cn('select__list', {
+            select__list_small: size == 'small',
+          })}
         >
-          {options?.map((option) => (
-            <li
-              key={option.value}
-              className={cn(
-                'custom-select__item',
-                `custom-select__item_${size}`
-              )}
-              onClick={() => handleSelect(option)}
-            >
-              <span>{option.label}</span>
-              {withStatus && (
-                <Status status={option.label as 'Alive' | 'Dead' | 'Unknown'} />
-              )}
-            </li>
-          ))}
+          {options?.map((option) => {
+            const optionIsStatus =
+              option.label === 'Alive' ||
+              option.label === 'Dead' ||
+              option.label === 'Unknown';
+            return (
+              <li
+                key={option.value}
+                className={cn('select__item', {
+                  select__item_small: size == 'small',
+                })}
+                onClick={() => {
+                  handleSelect(option);
+                }}
+              >
+                <span>{option.label}</span>
+                {withStatus && optionIsStatus && (
+                  <Status status={option.label} />
+                )}
+              </li>
+            );
+          })}
         </ul>
       )}
     </div>

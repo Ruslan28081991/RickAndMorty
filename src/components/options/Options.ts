@@ -21,4 +21,4 @@ export const STATUS_OPTIONS = [
   { value: 'alive', label: 'Alive' },
   { value: 'dead', label: 'Dead' },
   { value: 'unknown', label: 'Unknown' },
-];
+] as const;
