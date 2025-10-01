@@ -24,7 +24,7 @@
 }
 
 .select__arrow_default {
-    background: url('../../assets/images/arrowDown.svg') no-repeat center;
+  background: url('../../assets/images/arrowDown.svg') no-repeat center;
   width: 15px;
   height: 15px;
 }

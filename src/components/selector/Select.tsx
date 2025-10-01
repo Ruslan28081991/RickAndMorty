@@ -5,7 +5,7 @@ import './Select.css';
 
 export interface IOption {
   value: string;
-  label: string,
+  label: string;
 }
 
 interface ISelectOptionContent {
@@ -13,8 +13,8 @@ interface ISelectOptionContent {
 }
 
 const DefaultSelectOptionContent = ({ value }: ISelectOptionContent) => {
-  return <>{value}</>
-}
+  return <>{value}</>;
+};
 
 interface ISelect {
   size?: 'default' | 'small';
@@ -23,7 +23,7 @@ interface ISelect {
   placeholder?: string;
   withStatus?: boolean;
   onChange?: (value: string) => void;
-  SelectOptionComponent?: React.FC<ISelectOptionContent>
+  SelectOptionComponent?: React.FC<ISelectOptionContent>;
 }
 
 export const Select = ({
@@ -34,7 +34,6 @@ export const Select = ({
   onChange,
   SelectOptionComponent = DefaultSelectOptionContent,
 }: ISelect) => {
-
   const [isOpenSelect, setIsOpenSelect] = useState<boolean>(false);
   const [selectedOption, setSelectedOption] = useState<IOption | null>(null);
   const selectRef = useRef<HTMLDivElement>(null);
@@ -58,13 +57,12 @@ export const Select = ({
   return (
     <div className='select'>
       <div
-        className={cn('select__header', `select__header_${size}`, {
-        })}
+        className={cn('select__header', `select__header_${size}`, {})}
         onClick={() => setIsOpenSelect((open) => !open)}
         ref={selectRef}
       >
         {selectedOption ? (
-            <SelectOptionComponent  value={selectedOption.value}/>
+          <SelectOptionComponent value={selectedOption.value} />
         ) : (
           <span>{placeholder}</span>
         )}
@@ -91,13 +89,14 @@ export const Select = ({
                 })}
                 onClick={() => {
                   handleSelectOption(option);
-                }}>
-                <SelectOptionComponent value={option.value}/>
+                }}
+              >
+                <SelectOptionComponent value={option.value} />
               </li>
             );
           })}
         </ul>
       )}
     </div>
-   );
+  );
 };
