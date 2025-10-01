@@ -6,14 +6,14 @@
   border-radius: 50%;
 }
 
-.status__green {
+.green {
   background-color: #12b800;
 }
 
-.status__red {
+.red {
   background-color: #df0000;
 }
 
-.status__orange {
+.orange {
   background-color: #ff9900;
 }

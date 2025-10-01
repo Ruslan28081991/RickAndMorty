@@ -1,98 +1,88 @@
 import { useEffect, useRef, useState } from 'react';
 import cn from 'classnames';
 
-import { Status } from '../status/Status';
-
 import './Select.css';
 
-interface IOptions {
-  readonly value: string;
-  readonly label: string;
+export interface IOption {
+  value: string;
+  label: string,
+}
+
+interface ISelectOptionContent {
+  value?: string;
+}
+
+const DefaultSelectOptionContent = ({ value }: ISelectOptionContent) => {
+  return <>{value}</>
 }
 
 interface ISelect {
   size?: 'default' | 'small';
   value?: string;
-  options?: readonly IOptions[];
+  options?: IOption[];
   placeholder?: string;
   withStatus?: boolean;
   onChange?: (value: string) => void;
+  SelectOptionComponent?: React.FC<ISelectOptionContent>
 }
 
 export const Select = ({
   size,
-  options,
+  options = [],
   value,
   placeholder,
-  withStatus,
   onChange,
+  SelectOptionComponent = DefaultSelectOptionContent,
 }: ISelect) => {
-  const [open, setOpen] = useState<boolean>(false);
-  const [selected, setSelected] = useState<IOptions | null>(null);
+
+  const [isOpenSelect, setIsOpenSelect] = useState<boolean>(false);
+  const [selectedOption, setSelectedOption] = useState<IOption | null>(null);
   const selectRef = useRef<HTMLDivElement>(null);
 
-  const handleSelect = (option: IOptions) => {
-    setSelected(option);
-    setOpen(false);
+  const handleSelectOption = (option: IOption) => {
+    setSelectedOption(option);
+    setIsOpenSelect(false);
     onChange?.(option.value);
   };
 
-  const selectedIsStatus =
-    !!selected &&
-    (selected.label === 'Alive' ||
-      selected.label === 'Dead' ||
-      selected.label === 'Unknown');
-
   useEffect(() => {
     if (!value) {
-      setSelected(null);
+      setSelectedOption(null);
       return;
     }
-    const findValue = options?.find((opt) => opt.value === value) || null;
-    setSelected(findValue);
+
+    const findValue = options?.find((option) => option.value === value) || null;
+    setSelectedOption(findValue);
   }, [value, options]);
 
   return (
     <div className='select'>
       <div
-        className={cn('select__header', {
-          select__open: open,
-          select__header_small: size == 'small',
+        className={cn('select__header', `select__header_${size}`, {
         })}
-        onClick={() => setOpen((prev) => !prev)}
+        onClick={() => setIsOpenSelect((open) => !open)}
         ref={selectRef}
       >
-        {selected ? (
-          <div className='select__wrapper'>
-            <span>{selected.label}</span>
-            {withStatus && selectedIsStatus && (
-              <Status status={selected.label} />
-            )}
-          </div>
+        {selectedOption ? (
+            <SelectOptionComponent  value={selectedOption.value}/>
         ) : (
           <span>{placeholder}</span>
         )}
         <button
-          className={cn('select__arrow', {
-            select__arrow_open: open,
-            select__arrow_small: size == 'small',
-            select__arrow_open_small: open && size == 'small',
+          className={cn('select__arrow', `select__arrow_${size}`, {
+            select__arrow_opened: isOpenSelect,
           })}
           aria-label='Toggle select'
         />
       </div>
 
-      {open && (
+      {isOpenSelect && options.length && (
         <ul
           className={cn('select__list', {
             select__list_small: size == 'small',
           })}
         >
-          {options?.map((option) => {
-            const optionIsStatus =
-              option.label === 'Alive' ||
-              option.label === 'Dead' ||
-              option.label === 'Unknown';
+          {options.map((option) => {
             return (
               <li
                 key={option.value}
@@ -100,18 +90,14 @@ export const Select = ({
                   select__item_small: size == 'small',
                 })}
                 onClick={() => {
-                  handleSelect(option);
-                }}
-              >
-                <span>{option.label}</span>
-                {withStatus && optionIsStatus && (
-                  <Status status={option.label} />
-                )}
+                  handleSelectOption(option);
+                }}>
+                <SelectOptionComponent value={option.value}/>
               </li>
             );
           })}
         </ul>
       )}
     </div>
-  );
+   );
 };

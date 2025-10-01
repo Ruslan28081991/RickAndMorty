@@ -20,18 +20,25 @@
 
 .select__arrow {
   border: none;
-  background: url('../../assets/images/arrowDown.svg') no-repeat center;
-  width: 15px;
-  height: 15px;
   cursor: pointer;
 }
 
-.select__arrow_open {
+.select__arrow_default {
+    background: url('../../assets/images/arrowDown.svg') no-repeat center;
+  width: 15px;
+  height: 15px;
+}
+
+.select__arrow_small {
+  background: url('../../assets/images/arrowDownSmall.svg') no-repeat center;
+}
+
+.select__arrow_opened {
   background: url('../../assets/images/arrowUp.svg') no-repeat center;
 }
 
-.select__header {
-  color: #00000099;
+.select__arrow_small.select__arrow_opened {
+  background: url('../../assets/images/arrowUpSmall.svg') no-repeat center;
 }
 
 .select__list {
@@ -60,14 +67,6 @@
   height: 21px;
   padding: 2px 5px;
   font-size: 14px;
-}
-
-.select__arrow_small {
-  background: url('../../assets/images/arrowDownSmall.svg') no-repeat center;
-}
-
-.select__arrow_open_small {
-  background: url('../../assets/images/arrowUpSmall.svg') no-repeat center;
 }
 
 .select__list_small {
