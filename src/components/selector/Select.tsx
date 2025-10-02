@@ -67,7 +67,9 @@ export const Select = ({
   return (
     <div className='select'>
       <div
-        className={cn('select__header', `select__header_${size}`, {})}
+        className={cn('select__header', {
+          select__header_small: size == 'small',
+        })}
         onClick={() => setIsOpenSelect((open) => !open)}
         ref={selectRef}
       >
