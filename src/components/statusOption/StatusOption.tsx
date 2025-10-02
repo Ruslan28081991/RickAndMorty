@@ -9,7 +9,7 @@ export const StatusOption = ({ value }: IStatusOption) => {
   const shouldShowStatus = value && isValidStatus(value);
 
   return (
-    <div className='status__option'>
+    <div className='select__status_option'>
       <span>{value}</span>
       {shouldShowStatus && <Status status={value} />}
     </div>

@@ -18,10 +18,9 @@ const DefaultSelectOptionContent = ({ value }: ISelectOptionContent) => {
 
 interface ISelect {
   size?: 'default' | 'small';
-  value?: string;
+  defaultValue?: string;
   options?: IOption[];
   placeholder?: string;
-  withStatus?: boolean;
   onChange?: (value: string) => void;
   SelectOptionComponent?: React.FC<ISelectOptionContent>;
 }
@@ -29,15 +28,19 @@ interface ISelect {
 export const Select = ({
   size,
   options = [],
-  value,
+  defaultValue,
   placeholder,
   onChange,
   SelectOptionComponent = DefaultSelectOptionContent,
 }: ISelect) => {
   const [isOpenSelect, setIsOpenSelect] = useState<boolean>(false);
-  const [selectedOption, setSelectedOption] = useState<IOption | null>(null);
+  const [selectedOption, setSelectedOption] = useState<IOption | null>(() => {
+    if (!defaultValue) return null;
+    return options.find((option) => option.value === defaultValue) || null;
+  });
   const selectRef = useRef<HTMLDivElement>(null);
 
+  // if(!value) return null
   const handleSelectOption = (option: IOption) => {
     setSelectedOption(option);
     setIsOpenSelect(false);
@@ -45,14 +48,21 @@ export const Select = ({
   };
 
   useEffect(() => {
-    if (!value) {
-      setSelectedOption(null);
-      return;
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        selectRef.current &&
+        !selectRef.current.contains(event.target as Node)
+      ) {
+        setIsOpenSelect(false);
+      }
     }
 
-    const findValue = options?.find((option) => option.value === value) || null;
-    setSelectedOption(findValue);
-  }, [value, options]);
+    document.addEventListener('click', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
 
   return (
     <div className='select'>
@@ -67,7 +77,8 @@ export const Select = ({
           <span>{placeholder}</span>
         )}
         <button
-          className={cn('select__arrow', `select__arrow_${size}`, {
+          className={cn('select__arrow', {
+            select__arrow_small: size == 'small',
             select__arrow_opened: isOpenSelect,
           })}
           aria-label='Toggle select'
