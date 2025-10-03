@@ -18,7 +18,7 @@ const DefaultSelectOptionContent = ({ value }: ISelectOptionContent) => {
 
 interface ISelect {
   size?: 'default' | 'small';
-  defaultValue?: string;
+  value?: string;
   options?: IOption[];
   placeholder?: string;
   onChange?: (value: string) => void;
@@ -28,19 +28,15 @@ interface ISelect {
 export const Select = ({
   size,
   options = [],
-  defaultValue,
+  value = 'Alive',
   placeholder,
   onChange,
   SelectOptionComponent = DefaultSelectOptionContent,
 }: ISelect) => {
   const [isOpenSelect, setIsOpenSelect] = useState<boolean>(false);
-  const [selectedOption, setSelectedOption] = useState<IOption | null>(() => {
-    if (!defaultValue) return null;
-    return options.find((option) => option.value === defaultValue) || null;
-  });
+  const [selectedOption, setSelectedOption] = useState<IOption | null>(null);
   const selectRef = useRef<HTMLDivElement>(null);
 
-  // if(!value) return null
   const handleSelectOption = (option: IOption) => {
     setSelectedOption(option);
     setIsOpenSelect(false);
@@ -65,18 +61,20 @@ export const Select = ({
   }, []);
 
   return (
-    <div className='select'>
+    <div
+      className='select'
+      ref={selectRef}
+    >
       <div
         className={cn('select__header', {
           select__header_small: size == 'small',
         })}
         onClick={() => setIsOpenSelect((open) => !open)}
-        ref={selectRef}
       >
-        {selectedOption ? (
-          <SelectOptionComponent value={selectedOption.value} />
+        {size === 'small' ? (
+          <SelectOptionComponent value={selectedOption?.label || value} />
         ) : (
-          <span>{placeholder}</span>
+          selectedOption?.label || placeholder
         )}
         <button
           className={cn('select__arrow', {
@@ -100,11 +98,9 @@ export const Select = ({
                 className={cn('select__item', {
                   select__item_small: size == 'small',
                 })}
-                onClick={() => {
-                  handleSelectOption(option);
-                }}
+                onClick={() => handleSelectOption(option)}
               >
-                <SelectOptionComponent value={option.value} />
+                <SelectOptionComponent value={option.label} />
               </li>
             );
           })}
