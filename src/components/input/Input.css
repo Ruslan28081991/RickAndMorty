@@ -1,0 +1,45 @@
+.input__wrapper {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.input__wrapper_filter {
+    width: 240px;
+    padding: 15px 5px;
+    border-radius: 10px;
+    border: solid 1px grey;
+    justify-content: center;
+}
+
+.input__wrapper_form {
+    width: 208px;
+    border: none;
+    justify-content: start;
+}
+
+.input__wrapper_filter svg {
+    margin-right: 10px;
+}
+
+input {
+    border: none;
+    outline: none;
+}
+
+.input__default {
+    width: 178px;
+    font-size: 16px;
+}
+
+.input__wrapper_form input:focus {
+    border-bottom: solid 1px #000000;
+}
+
+.input__small {
+    width: 101px;
+    height: 17px;
+    font-size: 14px;
+}
+
+
