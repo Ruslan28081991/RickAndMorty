@@ -1,45 +1,48 @@
 .input__wrapper {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  border: solid 1px grey;
 }
 
 .input__wrapper_filter {
-    width: 240px;
-    padding: 15px 5px;
-    border-radius: 10px;
-    border: solid 1px grey;
-    justify-content: center;
-}
-
-.input__wrapper_form {
-    width: 208px;
-    border: none;
-    justify-content: start;
+  max-width: 240px;
+  padding: 15px 5px;
+  border-radius: 10px;
+  justify-content: center;
 }
 
 .input__wrapper_filter svg {
-    margin-right: 10px;
+  margin-right: 10px;
 }
 
-input {
-    border: none;
-    outline: none;
+.input__wrapper_form {
+  max-width: 208px;
+  border: none;
+  justify-content: start;
+}
+
+.input__wrapper_form .input:focus {
+  border-bottom: solid 1px #000000;
+}
+
+.input {
+  border: none;
+  outline: none;
 }
 
 .input__default {
-    width: 178px;
-    font-size: 16px;
-}
-
-.input__wrapper_form input:focus {
-    border-bottom: solid 1px #000000;
+  max-width: 178px;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 30px;
+  letter-spacing: 0.15px;
 }
 
 .input__small {
-    width: 101px;
-    height: 17px;
-    font-size: 14px;
+  max-width: 101px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 21px;
+  letter-spacing: 0.25px;
 }
-
-
