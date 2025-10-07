@@ -5,15 +5,15 @@ import SearchIcon from '../../assets/images/search.svg?react';
 import './Input.css';
 
 interface IInput {
-  view: 'filter' | 'form';
-  size?: 'default' | 'small';
+  view: 'underline' | 'border';
+  size?: 'big' | 'small';
   placeholder?: string;
   value?: string | number;
   onChange?: (value: string) => void;
 }
 
 export const Input = ({
-  view = 'form',
+  view = 'border',
   size,
   placeholder,
   value,
@@ -25,16 +25,16 @@ export const Input = ({
 
   return (
     <div
-      className={cn('input__wrapper', {
-        input__wrapper_filter: view === 'filter',
-        input__wrapper_form: view === 'form',
+      className={cn('textInput', {
+        textInput__underline: view === 'underline',
+        textInput__border: view === 'border',
       })}
     >
-      {view === 'filter' && <SearchIcon />}
+      {view === 'underline' && <SearchIcon />}
       <input
-        className={cn('input', {
-          input__default: size === 'default',
-          input__small: size === 'small',
+        className={cn('textInput__input', {
+          textInput__inputBig: size === 'big',
+          textInput__inputSmall: size === 'small',
         })}
         type='text'
         placeholder={placeholder}

@@ -1,37 +1,37 @@
-.input__wrapper {
+.textInput {
   display: flex;
   align-items: center;
   cursor: pointer;
-  border: solid 1px grey;
 }
 
-.input__wrapper_filter {
+.textInput__underliner {
   max-width: 240px;
   padding: 15px 5px;
+  border: solid 1px grey;
   border-radius: 10px;
   justify-content: center;
 }
 
-.input__wrapper_filter svg {
+.textInput__underline svg {
   margin-right: 10px;
 }
 
-.input__wrapper_form {
+.textInput__border {
   max-width: 208px;
   border: none;
   justify-content: start;
 }
 
-.input__wrapper_form .input:focus {
+.textInput__border .textInput__input:focus {
   border-bottom: solid 1px #000000;
 }
 
-.input {
+.textInput__input {
   border: none;
   outline: none;
 }
 
-.input__default {
+.textInput__inputBig {
   max-width: 178px;
   font-size: 20px;
   font-weight: 500;
@@ -39,7 +39,7 @@
   letter-spacing: 0.15px;
 }
 
-.input__small {
+.textInput__inputSmall {
   max-width: 101px;
   font-size: 14px;
   font-weight: 400;
