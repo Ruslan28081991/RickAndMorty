@@ -5,15 +5,15 @@ import SearchIcon from '../../assets/images/search.svg?react';
 import './Input.css';
 
 interface IInput {
-  view: 'underline' | 'border';
-  size?: 'big' | 'small';
+  view: 'underlined' | 'bordered';
+  size?: 'medium' | 'small';
   placeholder?: string;
   value?: string | number;
   onChange?: (value: string) => void;
 }
 
 export const Input = ({
-  view = 'border',
+  view = 'bordered',
   size,
   placeholder,
   value,
@@ -26,15 +26,15 @@ export const Input = ({
   return (
     <div
       className={cn('textInput', {
-        textInput__underline: view === 'underline',
-        textInput__border: view === 'border',
+        textInput_underlined: view === 'underlined',
+        textInput_bordered: view === 'bordered',
       })}
     >
-      {view === 'underline' && <SearchIcon />}
+      {view === 'underlined' && <SearchIcon />}
       <input
         className={cn('textInput__input', {
-          textInput__inputBig: size === 'big',
-          textInput__inputSmall: size === 'small',
+          textInput__input_size_medium: size === 'medium',
+          textInput__input_size_small: size === 'small',
         })}
         type='text'
         placeholder={placeholder}
