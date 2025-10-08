@@ -1,0 +1,48 @@
+.textInput {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.textInput_underlined {
+  max-width: 240px;
+  padding: 15px 5px;
+  border: solid 1px grey;
+  border-radius: 10px;
+  justify-content: center;
+}
+
+.textInput_underlined svg {
+  margin-right: 10px;
+}
+
+.textInput_bordered {
+  max-width: 208px;
+  border: none;
+  justify-content: start;
+}
+
+.textInput_bordered .textInput__input:focus {
+  border-bottom: solid 1px #000000;
+}
+
+.textInput__input {
+  border: none;
+  outline: none;
+}
+
+.textInput__input_medium {
+  max-width: 178px;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 30px;
+  letter-spacing: 0.15px;
+}
+
+.textInput__input_small {
+  max-width: 101px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 21px;
+  letter-spacing: 0.25px;
+}
