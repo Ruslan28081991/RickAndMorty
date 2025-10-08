@@ -33,8 +33,8 @@ export const Input = ({
       {view === 'underlined' && <SearchIcon />}
       <input
         className={cn('textInput__input', {
-          textInput__input_size_medium: size === 'medium',
-          textInput__input_size_small: size === 'small',
+          textInput__input_medium: size === 'medium',
+          textInput__input_small: size === 'small',
         })}
         type='text'
         placeholder={placeholder}
