@@ -10,6 +10,7 @@ interface IInput {
   placeholder?: string;
   value?: string | number;
   onChange?: (value: string) => void;
+  autoFocus?: boolean;
 }
 
 export const Input = ({
@@ -18,6 +19,7 @@ export const Input = ({
   placeholder,
   value,
   onChange,
+  autoFocus,
 }: IInput) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChange?.(e.target.value);
@@ -30,7 +32,7 @@ export const Input = ({
         textInput_bordered: view === 'bordered',
       })}
     >
-      {view === 'underlined' && <SearchIcon />}
+      {view === 'bordered' && <SearchIcon />}
       <input
         className={cn('textInput__input', {
           textInput__input_medium: size === 'medium',
@@ -40,6 +42,7 @@ export const Input = ({
         placeholder={placeholder}
         value={value}
         onChange={handleChange}
+        autoFocus={autoFocus}
       />
     </div>
   );

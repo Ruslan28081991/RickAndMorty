@@ -47,6 +47,7 @@
 
 .select__list {
   width: 100%;
+  background-color: #fff;
   border: 1px solid #393939;
   border-radius: 6px;
   padding: 4px 0;

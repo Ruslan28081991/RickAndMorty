@@ -72,7 +72,9 @@ export const Select = ({
         onClick={() => setIsOpenSelect((open) => !open)}
       >
         {size === 'small' ? (
-          <SelectOptionComponent value={selectedOption?.label || value} />
+          <div className='select__header-wrapper'>
+            <SelectOptionComponent value={selectedOption?.label || value} />
+          </div>
         ) : (
           selectedOption?.label || placeholder
         )}
