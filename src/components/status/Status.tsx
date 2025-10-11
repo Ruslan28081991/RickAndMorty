@@ -14,7 +14,7 @@ interface IStatus {
   status: TStatus;
 }
 
-export const Status = ({ status }: IStatus) => {
+export const Status = ({ status = 'Alive' }: IStatus) => {
   const colorClass = STATUS_COLOR[status];
 
   return <span className={cn('status', colorClass)}></span>;
