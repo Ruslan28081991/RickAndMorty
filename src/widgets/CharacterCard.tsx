@@ -34,6 +34,7 @@ export const CharacterCard = ({
   const [tempValue, setTempValue] = useState<string>('');
   const [editingField, setEditingField] = useState<string | null>(null);
   const [hoveredField, setHoveredField] = useState<string | null>(null);
+  const [isStatusOpen, setIsStausOpen] = useState<boolean>(false);
 
   const startEditing = (field: string, currentValue: string) => {
     setEditingField(field);
@@ -50,6 +51,10 @@ export const CharacterCard = ({
 
   const cancelEdit = () => {
     setEditingField(null);
+  };
+
+  const toggleStatusSelect = () => {
+    setIsStausOpen((open) => !open);
   };
 
   const EditMode = () => (
@@ -89,12 +94,9 @@ export const CharacterCard = ({
       ) : (
         <span>{value}</span>
       )}
+
       {hoveredField === field && (
         <div className='character-card__actions'>
-          <button
-            className='character-card__close-btn'
-            onClick={cancelEdit}
-          />
           <button
             className='character-card__edit-btn'
             onClick={() => startEditing(field, value)}
@@ -106,9 +108,9 @@ export const CharacterCard = ({
 
   return (
     <div className='character-card'>
-      <div className='character-card__wrapper'>
+      <div className='character-card__image'>
         <img
-          className='character-card__image'
+          className='character-card__image-character'
           src={Rick}
           alt={`Picture ${character.name}`}
         />
@@ -125,7 +127,7 @@ export const CharacterCard = ({
         )}
 
         <dl className='character-card__list'>
-          <dt className='character-card__item'> Gender</dt>
+          <dt className='character-card__item'> Gender </dt>
           <dd className='character-card__item-text'>
             {editingField === 'gender' ? (
               <EditMode />
@@ -161,21 +163,55 @@ export const CharacterCard = ({
             )}
           </dd>
 
-          <dt className='character-card__item'>
-            Status
-            <Select
-              options={STATUS_OPTIONS}
-              size='small'
-              value={character.status}
-              onChange={(newStatus) => onEditCharacter?.('status', newStatus)}
-              SelectOptionComponent={({ value }) => (
-                <>
-                  <span>{value}</span>
-                  <Status status={value as TStatus} />
-                </>
-              )}
-            />
-          </dt>
+          <dt className='character-card__item'> Status </dt>
+          <dd className='character-card__item-text'>
+            <div
+              className='character-card__status'
+              onMouseEnter={() => setHoveredField('status')}
+              onMouseLeave={() => setHoveredField(null)}
+            >
+              <div className='character-card__status-current'>
+                {!isStatusOpen && (
+                  <>
+                    <div className='character-card__status-wrapper'>
+                      <span>{character.status}</span>
+                      <Status status={character.status} />
+                    </div>
+
+                    {hoveredField === 'status' && (
+                      <button
+                        className='character-card__edit-btn'
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleStatusSelect();
+                        }}
+                      />
+                    )}
+                  </>
+                )}
+
+                {isStatusOpen && (
+                  <div className='character-card__select-wrapper'>
+                    <Select
+                      options={STATUS_OPTIONS}
+                      size='small'
+                      value={character.status}
+                      onChange={(newStatus) => {
+                        onEditCharacter?.('status', newStatus);
+                        setIsStausOpen(false);
+                      }}
+                      SelectOptionComponent={({ value }) => (
+                        <>
+                          <span>{value}</span>
+                          <Status status={value} />
+                        </>
+                      )}
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
+          </dd>
         </dl>
       </div>
     </div>

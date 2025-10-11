@@ -1,5 +1,16 @@
+.character-card {
+  padding: 0 7px;
+  width: 508px;
+  height: 248px;
+  border: solid 1px #ffffff;
+  border-radius: 6px;
+  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);
+  display: flex;
+}
+
 .character-card__edit-mode {
   display: flex;
+  justify-content: space-between;
   align-items: center;
   gap: 8px;
 }
@@ -29,8 +40,8 @@
   background-size: contain;
   background-color: #ffffff;
   border: none;
-  width: 10px;
-  height: 10px;
+  width: 13px;
+  height: 13px;
   cursor: pointer;
 }
 
@@ -40,23 +51,12 @@
   align-items: center;
 }
 
-.character-card {
-  padding: 0 7px;
-  width: 508px;
-  height: 248px;
-  border: solid 1px #ffffff;
-  border-radius: 6px;
-  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);
-  display: flex;
-  justify-content: space-between;
-}
-
-.character-card__wrapper {
+.character-card__image {
   display: flex;
   align-items: center;
 }
 
-.character-card__image {
+.character-card__image-character {
   border-radius: 8px;
   width: 240px;
   height: 234px;
@@ -64,6 +64,7 @@
 
 .character-card__info {
   padding: 5px 10px;
+  width: 100%;
 }
 
 .character-card__name {
@@ -97,4 +98,11 @@
   color: #00000099;
   font-size: 14px;
   font-weight: 400;
+}
+
+.character-card__status-current {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 4px;
 }

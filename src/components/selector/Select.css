@@ -62,7 +62,7 @@
 .select__item {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 4px;
   padding: 10px 14px;
   color: #00000099;
 }
