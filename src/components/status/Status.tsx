@@ -11,7 +11,7 @@ const STATUS_COLOR = {
 export type TStatus = keyof typeof STATUS_COLOR;
 
 interface IStatus {
-  status: TStatus;
+  status?: TStatus;
 }
 
 export const Status = ({ status = 'Alive' }: IStatus) => {

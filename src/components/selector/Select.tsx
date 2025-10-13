@@ -12,7 +12,7 @@ interface ISelectOptionContent<T = string> {
   value?: T;
 }
 
-const DefaultSelectOptionContent = <T,>({ value }: ISelectOptionContent<T>) => {
+const DefaultSelectOptionContent = <T,>(value: ISelectOptionContent<T>) => {
   return <>{String(value)}</>;
 };
 

@@ -76,6 +76,13 @@
   text-decoration: none;
 }
 
+.character-card__status-current {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 4px;
+}
+
 .character-card__list {
   margin: 0;
   margin-top: 10px;
@@ -98,11 +105,4 @@
   color: #00000099;
   font-size: 14px;
   font-weight: 400;
-}
-
-.character-card__status-current {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 4px;
 }

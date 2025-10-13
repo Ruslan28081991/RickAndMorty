@@ -13,7 +13,7 @@ export interface ICharacter {
   gender: string;
   species: string;
   location: string;
-  status?: TStatus;
+  status: TStatus;
 }
 
 interface ICharacterCard {
@@ -34,7 +34,6 @@ export const CharacterCard = ({
   const [tempValue, setTempValue] = useState<string>('');
   const [editingField, setEditingField] = useState<string | null>(null);
   const [hoveredField, setHoveredField] = useState<string | null>(null);
-  const [isStatusOpen, setIsStausOpen] = useState<boolean>(false);
 
   const startEditing = (field: string, currentValue: string) => {
     setEditingField(field);
@@ -43,7 +42,7 @@ export const CharacterCard = ({
   };
 
   const saveEdit = () => {
-    if (editingField && onEditCharacter) {
+    if (editingField && onEditCharacter && editingField !== 'status') {
       onEditCharacter(editingField, tempValue);
     }
     setEditingField(null);
@@ -53,28 +52,44 @@ export const CharacterCard = ({
     setEditingField(null);
   };
 
-  const toggleStatusSelect = () => {
-    setIsStausOpen((open) => !open);
-  };
-
-  const EditMode = () => (
+  const EditMode = ({ field }: { field?: string }) => (
     <div className='character-card__edit-mode'>
-      <Input
-        view='underlined'
-        value={tempValue}
-        onChange={(value) => setTempValue(value)}
-        autoFocus
-      />
-      <div className='character-card__actions'>
-        <button
-          className='character-card__close-btn'
-          onClick={cancelEdit}
+      {field === 'status' ? (
+        <Select<TStatus>
+          options={STATUS_OPTIONS}
+          size='small'
+          value={character.status || 'Alive'}
+          onChange={(newStatus) => {
+            onEditCharacter?.('status', newStatus);
+            setEditingField(null);
+          }}
+          SelectOptionComponent={({ value }) => (
+            <>
+              <span>{value}</span>
+              <Status status={value} />
+            </>
+          )}
         />
-        <button
-          className='character-card__save-btn'
-          onClick={saveEdit}
-        />
-      </div>
+      ) : (
+        <>
+          <Input
+            view='underlined'
+            value={tempValue}
+            onChange={(value) => setTempValue(value)}
+            autoFocus
+          />
+          <div className='character-card__actions'>
+            <button
+              className='character-card__close-btn'
+              onClick={cancelEdit}
+            />
+            <button
+              className='character-card__save-btn'
+              onClick={saveEdit}
+            />
+          </div>
+        </>
+      )}
     </div>
   );
 
@@ -91,6 +106,11 @@ export const CharacterCard = ({
         >
           {value}
         </a>
+      ) : field === 'status' ? (
+        <div className='character-card__status-current'>
+          <span>{value}</span>
+          <Status status={character.status} />
+        </div>
       ) : (
         <span>{value}</span>
       )}
@@ -127,7 +147,7 @@ export const CharacterCard = ({
         )}
 
         <dl className='character-card__list'>
-          <dt className='character-card__item'> Gender </dt>
+          <dt className='character-card__item'>Gender</dt>
           <dd className='character-card__item-text'>
             {editingField === 'gender' ? (
               <EditMode />
@@ -139,7 +159,7 @@ export const CharacterCard = ({
             )}
           </dd>
 
-          <dt className='character-card__item'> Species </dt>
+          <dt className='character-card__item'>Species</dt>
           <dd className='character-card__item-text'>
             {editingField === 'species' ? (
               <EditMode />
@@ -151,7 +171,7 @@ export const CharacterCard = ({
             )}
           </dd>
 
-          <dt className='character-card__item'> Location </dt>
+          <dt className='character-card__item'>Location</dt>
           <dd className='character-card__item-text'>
             {editingField === 'location' ? (
               <EditMode />
@@ -163,54 +183,16 @@ export const CharacterCard = ({
             )}
           </dd>
 
-          <dt className='character-card__item'> Status </dt>
+          <dt className='character-card__item'>Status</dt>
           <dd className='character-card__item-text'>
-            <div
-              className='character-card__status'
-              onMouseEnter={() => setHoveredField('status')}
-              onMouseLeave={() => setHoveredField(null)}
-            >
-              <div className='character-card__status-current'>
-                {!isStatusOpen && (
-                  <>
-                    <div className='character-card__status-wrapper'>
-                      <span>{character.status}</span>
-                      <Status status={character.status} />
-                    </div>
-
-                    {hoveredField === 'status' && (
-                      <button
-                        className='character-card__edit-btn'
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          toggleStatusSelect();
-                        }}
-                      />
-                    )}
-                  </>
-                )}
-
-                {isStatusOpen && (
-                  <div className='character-card__select-wrapper'>
-                    <Select
-                      options={STATUS_OPTIONS}
-                      size='small'
-                      value={character.status}
-                      onChange={(newStatus) => {
-                        onEditCharacter?.('status', newStatus);
-                        setIsStausOpen(false);
-                      }}
-                      SelectOptionComponent={({ value }) => (
-                        <>
-                          <span>{value}</span>
-                          <Status status={value} />
-                        </>
-                      )}
-                    />
-                  </div>
-                )}
-              </div>
-            </div>
+            {editingField === 'status' ? (
+              <EditMode field='status' />
+            ) : (
+              <ViewMode
+                field='status'
+                value={character.status}
+              />
+            )}
           </dd>
         </dl>
       </div>
