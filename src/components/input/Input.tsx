@@ -1,6 +1,5 @@
+import type { ComponentType, SVGProps } from 'react';
 import cn from 'classnames';
-
-import SearchIcon from '../../assets/images/search.svg?react';
 
 import './Input.css';
 
@@ -10,7 +9,7 @@ interface IInput {
   placeholder?: string;
   value?: string | number;
   onChange?: (value: string) => void;
-  searchIcon?: boolean;
+  icon?: ComponentType<SVGProps<SVGSVGElement>>;
   autoFocus?: boolean;
 }
 
@@ -20,7 +19,7 @@ export const Input = ({
   placeholder,
   value,
   onChange,
-  searchIcon,
+  icon: IconComponent,
   autoFocus,
 }: IInput) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,7 +33,7 @@ export const Input = ({
         textInput_bordered: view === 'bordered',
       })}
     >
-      {searchIcon && <SearchIcon />}
+      {IconComponent && <IconComponent />}
       <input
         className={cn('textInput__input', {
           textInput__input_medium: size === 'medium',

@@ -76,7 +76,7 @@
   text-decoration: none;
 }
 
-.character-card__status-current {
+.character-card__status {
   display: flex;
   justify-content: space-between;
   align-items: center;

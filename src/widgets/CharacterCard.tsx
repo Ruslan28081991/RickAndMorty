@@ -13,7 +13,7 @@ export interface ICharacter {
   gender: string;
   species: string;
   location: string;
-  status: TStatus;
+  status?: TStatus;
 }
 
 interface ICharacterCard {
@@ -42,7 +42,7 @@ export const CharacterCard = ({
   };
 
   const saveEdit = () => {
-    if (editingField && onEditCharacter && editingField !== 'status') {
+    if (editingField && onEditCharacter) {
       onEditCharacter(editingField, tempValue);
     }
     setEditingField(null);
@@ -52,44 +52,24 @@ export const CharacterCard = ({
     setEditingField(null);
   };
 
-  const EditMode = ({ field }: { field?: string }) => (
+  const EditMode = () => (
     <div className='character-card__edit-mode'>
-      {field === 'status' ? (
-        <Select<TStatus>
-          options={STATUS_OPTIONS}
-          size='small'
-          value={character.status || 'Alive'}
-          onChange={(newStatus) => {
-            onEditCharacter?.('status', newStatus);
-            setEditingField(null);
-          }}
-          SelectOptionComponent={({ value }) => (
-            <>
-              <span>{value}</span>
-              <Status status={value} />
-            </>
-          )}
+      <Input
+        view='underlined'
+        value={tempValue}
+        onChange={(value) => setTempValue(value)}
+        autoFocus
+      />
+      <div className='character-card__actions'>
+        <button
+          className='character-card__close-btn'
+          onClick={cancelEdit}
         />
-      ) : (
-        <>
-          <Input
-            view='underlined'
-            value={tempValue}
-            onChange={(value) => setTempValue(value)}
-            autoFocus
-          />
-          <div className='character-card__actions'>
-            <button
-              className='character-card__close-btn'
-              onClick={cancelEdit}
-            />
-            <button
-              className='character-card__save-btn'
-              onClick={saveEdit}
-            />
-          </div>
-        </>
-      )}
+        <button
+          className='character-card__save-btn'
+          onClick={saveEdit}
+        />
+      </div>
     </div>
   );
 
@@ -106,11 +86,6 @@ export const CharacterCard = ({
         >
           {value}
         </a>
-      ) : field === 'status' ? (
-        <div className='character-card__status-current'>
-          <span>{value}</span>
-          <Status status={character.status} />
-        </div>
       ) : (
         <span>{value}</span>
       )}
@@ -186,12 +161,43 @@ export const CharacterCard = ({
           <dt className='character-card__item'>Status</dt>
           <dd className='character-card__item-text'>
             {editingField === 'status' ? (
-              <EditMode field='status' />
-            ) : (
-              <ViewMode
-                field='status'
+              <Select<TStatus>
+                options={STATUS_OPTIONS}
+                size='small'
                 value={character.status}
+                onChange={(newStatus) => {
+                  onEditCharacter?.('status', newStatus);
+                  setEditingField(null);
+                }}
+                SelectOptionComponent={({ value }) => (
+                  <>
+                    <span>{value}</span>
+                    <Status status={value} />
+                  </>
+                )}
               />
+            ) : (
+              <div
+                className='character-card__view-mode'
+                onMouseEnter={() => setHoveredField('status')}
+                onMouseLeave={() => setHoveredField(null)}
+              >
+                <div className='character-card__status'>
+                  <span>{character.status}</span>
+                  <Status status={character.status} />
+                </div>
+
+                {hoveredField === 'status' && (
+                  <div className='character-card__actions'>
+                    <button
+                      className='character-card__edit-btn'
+                      onClick={() =>
+                        startEditing('status', character.status || '')
+                      }
+                    />
+                  </div>
+                )}
+              </div>
             )}
           </dd>
         </dl>
