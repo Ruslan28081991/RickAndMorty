@@ -3,41 +3,41 @@ import cn from 'classnames';
 
 import './Select.css';
 
-export interface IOption {
-  value: string;
+export interface IOption<T = string> {
+  value: T;
   label: string;
 }
 
-interface ISelectOptionContent {
-  value?: string;
+interface ISelectOptionContent<T = string> {
+  value?: T;
 }
 
-const DefaultSelectOptionContent = ({ value }: ISelectOptionContent) => {
-  return <>{value}</>;
+const DefaultSelectOptionContent = <T,>(value: ISelectOptionContent<T>) => {
+  return <>{String(value)}</>;
 };
 
-interface ISelect {
+interface ISelect<T = string> {
   size?: 'default' | 'small';
-  value?: string;
-  options?: IOption[];
+  value?: T;
+  options?: IOption<T>[];
   placeholder?: string;
-  onChange?: (value: string) => void;
-  SelectOptionComponent?: React.FC<ISelectOptionContent>;
+  onChange?: (value: T) => void;
+  SelectOptionComponent?: React.FC<ISelectOptionContent<T>>;
 }
 
-export const Select = ({
+export const Select = <T,>({
   size,
   options = [],
-  value = 'Alive',
+  value,
   placeholder,
   onChange,
   SelectOptionComponent = DefaultSelectOptionContent,
-}: ISelect) => {
+}: ISelect<T>) => {
   const [isOpenSelect, setIsOpenSelect] = useState<boolean>(false);
-  const [selectedOption, setSelectedOption] = useState<IOption | null>(null);
+  const [selectedOption, setSelectedOption] = useState<IOption<T> | null>(null);
   const selectRef = useRef<HTMLDivElement>(null);
 
-  const handleSelectOption = (option: IOption) => {
+  const handleSelectOption = (option: IOption<T>) => {
     setSelectedOption(option);
     setIsOpenSelect(false);
     onChange?.(option.value);
@@ -71,11 +71,10 @@ export const Select = ({
         })}
         onClick={() => setIsOpenSelect((open) => !open)}
       >
-        {size === 'small' ? (
-          <SelectOptionComponent value={selectedOption?.label || value} />
-        ) : (
-          selectedOption?.label || placeholder
-        )}
+        <div className='select__wrapper'>
+          <SelectOptionComponent value={selectedOption?.value || value} />
+        </div>
+        {!selectedOption?.value && !value && <span>{placeholder}</span>}
         <button
           className={cn('select__arrow', {
             select__arrow_small: size == 'small',
@@ -94,13 +93,13 @@ export const Select = ({
           {options.map((option) => {
             return (
               <li
-                key={option.value}
+                key={String(option.value)}
                 className={cn('select__item', {
                   select__item_small: size == 'small',
                 })}
                 onClick={() => handleSelectOption(option)}
               >
-                <SelectOptionComponent value={option.label} />
+                <SelectOptionComponent value={option.value} />
               </li>
             );
           })}

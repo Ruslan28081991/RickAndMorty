@@ -4,7 +4,7 @@
   cursor: pointer;
 }
 
-.textInput_underlined {
+.textInput_bordered {
   max-width: 240px;
   padding: 15px 5px;
   border: solid 1px grey;
@@ -12,17 +12,17 @@
   justify-content: center;
 }
 
-.textInput_underlined svg {
+.textInput_bordered svg {
   margin-right: 10px;
 }
 
-.textInput_bordered {
+.textInput_underlined {
   max-width: 208px;
   border: none;
   justify-content: start;
 }
 
-.textInput_bordered .textInput__input:focus {
+.textInput_underlined .textInput__input:focus {
   border-bottom: solid 1px #000000;
 }
 

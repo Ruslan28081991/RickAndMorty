@@ -1,3 +1,6 @@
+import type { IOption } from '../selector/Select';
+import type { TStatus } from '../status/Status';
+
 export const SPECIES_OPTIONS = [
   { value: 'human', label: 'Human' },
   { value: 'alien', label: 'Alien' },
@@ -17,8 +20,8 @@ export const GENDER_OPTIONS = [
   { value: 'unknown', label: 'Unknown' },
 ];
 
-export const STATUS_OPTIONS = [
-  { value: 'alive', label: 'Alive' },
-  { value: 'dead', label: 'Dead' },
-  { value: 'unknown', label: 'Unknown' },
+export const STATUS_OPTIONS: IOption<TStatus>[] = [
+  { value: 'Alive', label: 'Alive' },
+  { value: 'Dead', label: 'Dead' },
+  { value: 'Unknown', label: 'Unknown' },
 ];
