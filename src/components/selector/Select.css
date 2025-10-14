@@ -46,13 +46,16 @@
 }
 
 .select__list {
-  width: 100%;
+  position: fixed;
+  width: 260px;
   background-color: #fff;
   border: 1px solid #393939;
   border-radius: 6px;
   padding: 4px 0;
   margin: 0;
   z-index: 1;
+  max-height: 160px;
+  overflow-y: auto;
 }
 
 .select__list_small {

@@ -13,6 +13,8 @@
   justify-content: space-between;
   align-items: center;
   gap: 8px;
+  height: 21px;
+  max-height: 30px;
 }
 
 .character-card__actions {
@@ -21,15 +23,15 @@
 }
 
 .character-card__close-btn {
-  background-image: url('../assets/images/close.svg');
+  background-image: url('../../assets/images/close.svg');
 }
 
 .character-card__save-btn {
-  background-image: url('../assets/images/save.svg');
+  background-image: url('../../assets/images/save.svg');
 }
 
 .character-card__edit-btn {
-  background-image: url('../assets/images/edit.svg');
+  background-image: url('../../assets/images/edit.svg');
 }
 
 .character-card__close-btn,
@@ -42,13 +44,13 @@
   border: none;
   width: 13px;
   height: 13px;
-  cursor: pointer;
 }
 
 .character-card__view-mode {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  height: 21px;
 }
 
 .character-card__image {
@@ -63,7 +65,7 @@
 }
 
 .character-card__info {
-  padding: 5px 10px;
+  padding: 10px;
   width: 100%;
 }
 
