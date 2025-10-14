@@ -1,10 +1,9 @@
 import { useState } from 'react';
 
-import Rick from '../assets/images/rick.jpg';
-import { Input } from '../components/input/Input';
-import { STATUS_OPTIONS } from '../components/options/Options';
-import { Select } from '../components/selector/Select';
-import { Status, type TStatus } from '../components/status/Status';
+import { Input } from '../../components/input/Input';
+import { STATUS_OPTIONS } from '../../components/options/Options';
+import { Select } from '../../components/selector/Select';
+import { Status, type TStatus } from '../../components/status/Status';
 
 import './CharacterCard.css';
 
@@ -14,6 +13,7 @@ export interface ICharacter {
   species: string;
   location: string;
   status?: TStatus;
+  image?: string;
 }
 
 interface ICharacterCard {
@@ -31,43 +31,54 @@ export const CharacterCard = ({
   character,
   onEditCharacter,
 }: ICharacterCard) => {
-  const [tempValue, setTempValue] = useState<string>('');
-  const [editingField, setEditingField] = useState<string | null>(null);
+  const [editingFields, setEditingFields] = useState<Record<string, string>>(
+    {}
+  );
   const [hoveredField, setHoveredField] = useState<string | null>(null);
 
   const startEditing = (field: string, currentValue: string) => {
-    setEditingField(field);
-    setTempValue(currentValue);
+    setEditingFields((prev) => ({ ...prev, [field]: currentValue }));
     setHoveredField(null);
   };
 
-  const saveEdit = () => {
-    if (editingField && onEditCharacter) {
-      onEditCharacter(editingField, tempValue);
+  const saveEdit = (field: string) => {
+    if (onEditCharacter) {
+      onEditCharacter(field, editingFields[field]);
     }
-    setEditingField(null);
+    setEditingFields((prev) => {
+      const updated = { ...prev };
+      delete updated[field];
+      return updated;
+    });
   };
 
-  const cancelEdit = () => {
-    setEditingField(null);
+  const cancelEdit = (field: string) => {
+    setEditingFields((prev) => {
+      const updated = { ...prev };
+      delete updated[field];
+      return updated;
+    });
   };
 
-  const EditMode = () => (
+  const EditMode = ({ field }: { field: string }) => (
     <div className='character-card__edit-mode'>
       <Input
         view='underlined'
-        value={tempValue}
-        onChange={(value) => setTempValue(value)}
+        size={field === 'name' ? 'medium' : 'small'}
+        value={editingFields[field]}
+        onChange={(value) =>
+          setEditingFields((prev) => ({ ...prev, [field]: value }))
+        }
         autoFocus
       />
       <div className='character-card__actions'>
         <button
           className='character-card__close-btn'
-          onClick={cancelEdit}
+          onClick={() => cancelEdit(field)}
         />
         <button
           className='character-card__save-btn'
-          onClick={saveEdit}
+          onClick={() => saveEdit(field)}
         />
       </div>
     </div>
@@ -106,13 +117,13 @@ export const CharacterCard = ({
       <div className='character-card__image'>
         <img
           className='character-card__image-character'
-          src={Rick}
+          src={character.image}
           alt={`Picture ${character.name}`}
         />
       </div>
       <div className='character-card__info'>
-        {editingField === 'name' ? (
-          <EditMode />
+        {editingFields['name'] !== undefined ? (
+          <EditMode field='name' />
         ) : (
           <ViewMode
             field='name'
@@ -124,8 +135,8 @@ export const CharacterCard = ({
         <dl className='character-card__list'>
           <dt className='character-card__item'>Gender</dt>
           <dd className='character-card__item-text'>
-            {editingField === 'gender' ? (
-              <EditMode />
+            {editingFields['gender'] !== undefined ? (
+              <EditMode field='gender' />
             ) : (
               <ViewMode
                 field='gender'
@@ -136,8 +147,8 @@ export const CharacterCard = ({
 
           <dt className='character-card__item'>Species</dt>
           <dd className='character-card__item-text'>
-            {editingField === 'species' ? (
-              <EditMode />
+            {editingFields['species'] !== undefined ? (
+              <EditMode field='species' />
             ) : (
               <ViewMode
                 field='species'
@@ -148,8 +159,8 @@ export const CharacterCard = ({
 
           <dt className='character-card__item'>Location</dt>
           <dd className='character-card__item-text'>
-            {editingField === 'location' ? (
-              <EditMode />
+            {editingFields['location'] !== undefined ? (
+              <EditMode field='location' />
             ) : (
               <ViewMode
                 field='location'
@@ -160,14 +171,19 @@ export const CharacterCard = ({
 
           <dt className='character-card__item'>Status</dt>
           <dd className='character-card__item-text'>
-            {editingField === 'status' ? (
+            {editingFields['status'] ? (
               <Select<TStatus>
                 options={STATUS_OPTIONS}
                 size='small'
                 value={character.status}
                 onChange={(newStatus) => {
                   onEditCharacter?.('status', newStatus);
-                  setEditingField(null);
+                  setEditingFields((prev) => {
+                    const updated = { ...prev };
+                    delete updated['status'];
+                    return updated;
+                  });
+                  setHoveredField(null);
                 }}
                 SelectOptionComponent={({ value }) => (
                   <>

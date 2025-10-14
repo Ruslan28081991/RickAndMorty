@@ -12,7 +12,7 @@ interface ISelectOptionContent<T = string> {
   value?: T;
 }
 
-const DefaultSelectOptionContent = <T,>(value: ISelectOptionContent<T>) => {
+const DefaultSelectOptionContent = <T,>({ value }: ISelectOptionContent<T>) => {
   return <>{String(value)}</>;
 };
 
@@ -26,7 +26,7 @@ interface ISelect<T = string> {
 }
 
 export const Select = <T,>({
-  size,
+  size = 'default',
   options = [],
   value,
   placeholder,
@@ -71,10 +71,11 @@ export const Select = <T,>({
         })}
         onClick={() => setIsOpenSelect((open) => !open)}
       >
+        {!selectedOption?.value && !value && <span>{placeholder}</span>}
         <div className='select__wrapper'>
           <SelectOptionComponent value={selectedOption?.value || value} />
         </div>
-        {!selectedOption?.value && !value && <span>{placeholder}</span>}
+
         <button
           className={cn('select__arrow', {
             select__arrow_small: size == 'small',

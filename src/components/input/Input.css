@@ -5,15 +5,16 @@
 }
 
 .textInput_bordered {
-  max-width: 240px;
+  width: 250px;
+  height: 26px;
   padding: 15px 5px;
-  border: solid 1px grey;
+  border: solid 1px #393939;
   border-radius: 10px;
   justify-content: center;
 }
 
 .textInput_bordered svg {
-  margin-right: 10px;
+  margin-right: 15px;
 }
 
 .textInput_underlined {
