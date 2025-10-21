@@ -1,11 +1,11 @@
-import SearchIcon from '../../assets/images/search.svg?react';
-import { Input } from '../../components/input/Input';
+import SearchIcon from '@/assets/images/search.svg?react';
 import {
   GENDER_OPTIONS,
+  Input,
+  Select,
   SPECIES_OPTIONS,
   STATUS_OPTIONS,
-} from '../../components/options/Options';
-import { Select } from '../../components/selector/Select';
+} from '@/shared';
 
 import './PanelFilters.css';
 
@@ -17,7 +17,7 @@ export interface ICharacterFilters {
   page?: number;
 }
 
-interface IPanelFilters {
+export interface IPanelFilters {
   filters: ICharacterFilters;
   onChangeFilters: (newFilters: ICharacterFilters) => void;
 }
@@ -50,19 +50,19 @@ export const PanelFilters = ({ filters, onChangeFilters }: IPanelFilters) => {
         icon={SearchIcon}
       />
       <Select
-        placeholder='Species'
+        placeholder='Select species'
         options={SPECIES_OPTIONS}
         value={filters.species}
         onChange={handleChangeSpecies}
       />
       <Select
-        placeholder='Gender'
+        placeholder='Select gender'
         options={GENDER_OPTIONS}
         value={filters.gender}
         onChange={handleChangeGender}
       />
       <Select
-        placeholder='Status'
+        placeholder='Select status'
         options={STATUS_OPTIONS}
         value={filters.status}
         onChange={handleChangeStatus}
