@@ -33,7 +33,7 @@ export const Input = ({
         textInput_bordered: view === 'bordered',
       })}
     >
-      {IconComponent && <IconComponent />}
+      {IconComponent && <IconComponent className='textInput__svg' />}
       <input
         className={cn('textInput__input', {
           textInput__input_medium: size === 'medium',

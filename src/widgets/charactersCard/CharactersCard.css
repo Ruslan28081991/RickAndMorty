@@ -1,6 +1,6 @@
 .characterCard {
   padding: 0 7px;
-  width: 508px;
+  width: 525px;
   height: 248px;
   border: solid 1px #ffffff;
   border-radius: 6px;
@@ -10,7 +10,7 @@
   position: relative;
 }
 
-.characterCard__edit {
+.characterCard__edited {
   opacity: 1;
   visibility: visible;
 }

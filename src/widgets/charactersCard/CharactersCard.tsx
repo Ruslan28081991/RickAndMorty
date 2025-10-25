@@ -31,6 +31,10 @@ export const CharactersCard = ({
   const [currentLocation, setCurrentLocation] = useState<string>(location);
   const [statusValue, setStatusValue] = useState<TStatus>(status!);
 
+  const currentStatus = STATUS_OPTIONS.find(
+    (option) => option.value === statusValue
+  );
+
   const handleEdit = () => {
     setIsEdit(true);
   };
@@ -61,7 +65,7 @@ export const CharactersCard = ({
   return (
     <div
       className={cn('characterCard', {
-        characterCard__edit: isEdit,
+        characterCard__edited: isEdit,
       })}
     >
       <img
@@ -140,16 +144,16 @@ export const CharactersCard = ({
                 size='small'
                 value={statusValue}
                 onChange={handleStatusChange}
-                SelectOptionComponent={({ value }) => (
+                SelectOptionComponent={({ option }) => (
                   <>
-                    <span>{value}</span>
-                    <Status status={value} />
+                    <span>{option?.label}</span>
+                    <Status status={option?.value} />
                   </>
                 )}
               />
             ) : (
               <>
-                {statusValue}
+                {currentStatus?.label}
                 <Status status={statusValue} />
               </>
             )}

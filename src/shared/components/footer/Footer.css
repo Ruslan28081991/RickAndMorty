@@ -1,5 +1,5 @@
 .footer {
-  position: fixed;
+  position: flex;
   left: 0;
   bottom: 0;
   width: 100%;
@@ -8,6 +8,7 @@
   box-shadow: -2px 0 26px -1px rgba(0, 0, 0, 0.1);
   display: flex;
   justify-content: center;
+  margin-top: 20px;
 }
 
 .footer__title {
