@@ -65,7 +65,7 @@ export const CharactersCard = ({
   return (
     <div
       className={cn('characterCard', {
-        characterCard__edited: isEdit,
+        characterCard_edited: isEdit,
       })}
     >
       <img
