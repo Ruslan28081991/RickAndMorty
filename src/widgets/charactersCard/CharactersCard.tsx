@@ -10,12 +10,16 @@ import { Input, Select, Status, STATUS_OPTIONS, type TStatus } from '@/shared';
 import './CharactersCard.css';
 
 export interface ICharacters {
+  id?: number;
   name: string;
   gender: string;
   species: string;
-  location: string;
-  status?: TStatus;
-  image?: string;
+  location: {
+    name: string;
+    url: string;
+  };
+  status: TStatus;
+  image: string;
 }
 
 export const CharactersCard = ({
@@ -26,9 +30,10 @@ export const CharactersCard = ({
   status,
   image,
 }: ICharacters) => {
+  console.log('status', status);
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [currentName, setCurrentName] = useState<string>(name);
-  const [currentLocation, setCurrentLocation] = useState<string>(location);
+  const [currentLocation, setCurrentLocation] = useState<string>(location.name);
   const [statusValue, setStatusValue] = useState<TStatus>(status!);
 
   const currentStatus = STATUS_OPTIONS.find(
@@ -45,7 +50,7 @@ export const CharactersCard = ({
 
   const handleCancel = () => {
     setCurrentName(name);
-    setCurrentLocation(location);
+    setCurrentLocation(location.name);
     setStatusValue(status!);
     setIsEdit(false);
   };
@@ -132,7 +137,7 @@ export const CharactersCard = ({
                 onChange={handleLocationChange}
               />
             ) : (
-              <span>{location}</span>
+              <span>{location.name}</span>
             )}
           </dd>
 

@@ -17,6 +17,12 @@
 .characters__container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: auto auto;
   gap: 20px;
+}
+
+.characters__loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  grid-column: 1 / -1;
 }

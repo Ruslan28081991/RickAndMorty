@@ -1,4 +1,3 @@
-
 import { Route, Routes } from 'react-router-dom';
 
 import { CharacterDetails, CharactersList } from '@/pages';
