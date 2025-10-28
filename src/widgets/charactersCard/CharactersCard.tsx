@@ -30,7 +30,6 @@ export const CharactersCard = ({
   status,
   image,
 }: ICharacters) => {
-  console.log('status', status);
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [currentName, setCurrentName] = useState<string>(name);
   const [currentLocation, setCurrentLocation] = useState<string>(location.name);
