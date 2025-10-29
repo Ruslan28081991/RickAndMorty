@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
-import { Api } from '@/api';
 import title from '@/assets/images/title.png';
+import { useCharacters } from '@/hooks';
 import { Loading } from '@/shared';
 import {
   CharactersCard,
@@ -18,7 +18,7 @@ export const CharactersList = () => {
     status: '',
     gender: '',
   });
-  const { characters, loading } = Api();
+  const { characters, loading } = useCharacters();
 
   return (
     <section className='characters'>
@@ -32,20 +32,19 @@ export const CharactersList = () => {
           filters={filters}
           onChangeFilters={setFilters}
         />
-        <div className='characters__container'>
+        <ul className='characters__container'>
           {loading ? (
-            // ничего лучше не придумал, если есть совет, буду ему рад :)
-            <div className='characters__loading'>
+            <li className='characters__loading'>
               <Loading
                 size='large'
                 text='Loading characters...'
               />
-            </div>
+            </li>
           ) : (
-            <>
-              {characters.map((character) => (
+            characters.map((character) => (
+              <li key={character.id}>
                 <CharactersCard
-                  key={character.id}
+                  id={character.id}
                   name={character.name}
                   gender={character.gender}
                   image={character.image}
@@ -53,10 +52,10 @@ export const CharactersList = () => {
                   species={character.species}
                   status={character.status}
                 />
-              ))}
-            </>
+              </li>
+            ))
           )}
-        </div>
+        </ul>
       </div>
     </section>
   );

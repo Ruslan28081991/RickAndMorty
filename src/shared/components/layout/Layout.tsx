@@ -7,19 +7,21 @@ import './Layout.css';
 
 export const Layout = () => {
   return (
-    <>
+    <div className='layout'>
       <Header />
-      <Routes>
-        <Route
-          path='/'
-          element={<CharactersList />}
-        />
-        <Route
-          path='/cha'
-          element={<CharacterDetails />}
-        />
-      </Routes>
+      <div className='layout__content'>
+        <Routes>
+          <Route
+            path='/'
+            element={<CharactersList />}
+          />
+          <Route
+            path='/cha'
+            element={<CharacterDetails />}
+          />
+        </Routes>
+      </div>
       <Footer />
-    </>
+    </div>
   );
 };

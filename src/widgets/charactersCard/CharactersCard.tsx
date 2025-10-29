@@ -10,7 +10,7 @@ import { Input, Select, Status, STATUS_OPTIONS, type TStatus } from '@/shared';
 import './CharactersCard.css';
 
 export interface ICharacters {
-  id?: number;
+  id: number;
   name: string;
   gender: string;
   species: string;
