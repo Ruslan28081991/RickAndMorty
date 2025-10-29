@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
-import Rick from '@/assets/images/rick.jpg';
 import title from '@/assets/images/title.png';
-import { type TStatus } from '@/shared';
+import { useCharacters } from '@/hooks';
+import { Loading } from '@/shared';
 import {
   CharactersCard,
   type ICharacterFilters,
@@ -12,47 +12,13 @@ import {
 import './CharactersList.css';
 
 export const CharactersList = () => {
-  const persons = [
-    {
-      name: 'Rick Sanchez',
-      status: 'alive' as TStatus,
-      species: 'Human',
-      gender: 'Male',
-      location: 'Earth',
-      image: Rick,
-    },
-    {
-      name: 'Rick Sanchez',
-      status: 'alive' as TStatus,
-      species: 'Human',
-      gender: 'Male',
-      location: 'Earth',
-      image: Rick,
-    },
-    {
-      name: 'Rick Sanchez',
-      status: 'alive' as TStatus,
-      species: 'Human',
-      gender: 'Male',
-      location: 'Earth',
-      image: Rick,
-    },
-    {
-      name: 'Rick Sanchez',
-      status: 'alive' as TStatus,
-      species: 'Human',
-      gender: 'Male',
-      location: 'Earth',
-      image: Rick,
-    },
-  ];
-
   const [filters, setFilters] = useState<ICharacterFilters>({
     name: '',
     species: '',
     status: '',
     gender: '',
   });
+  const { characters, loading } = useCharacters();
 
   return (
     <section className='characters'>
@@ -66,19 +32,30 @@ export const CharactersList = () => {
           filters={filters}
           onChangeFilters={setFilters}
         />
-        <div className='characters__container'>
-          {persons.map((per, index) => (
-            <CharactersCard
-              key={index}
-              name={per.name}
-              gender={per.gender}
-              image={per.image}
-              location={per.location}
-              species={per.species}
-              status={per.status}
-            />
-          ))}
-        </div>
+        <ul className='characters__container'>
+          {loading ? (
+            <li className='characters__loading'>
+              <Loading
+                size='large'
+                text='Loading characters...'
+              />
+            </li>
+          ) : (
+            characters.map((character) => (
+              <li key={character.id}>
+                <CharactersCard
+                  id={character.id}
+                  name={character.name}
+                  gender={character.gender}
+                  image={character.image}
+                  location={character.location}
+                  species={character.species}
+                  status={character.status}
+                />
+              </li>
+            ))
+          )}
+        </ul>
       </div>
     </section>
   );

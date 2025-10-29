@@ -107,7 +107,7 @@ export const Select = <T extends string>({
           {options.map((option) => {
             return (
               <li
-                key={String(option.value)}
+                key={option.value}
                 className={cn('select__item', {
                   select__item_small: size == 'small',
                 })}
