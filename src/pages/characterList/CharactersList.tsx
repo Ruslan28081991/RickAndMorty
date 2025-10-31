@@ -1,24 +1,16 @@
-import { useState } from 'react';
-
 import title from '@/assets/images/title.png';
-import { useCharacters } from '@/hooks';
+import { useCharacterFilters, useCharacters } from '@/hooks';
 import { Loading } from '@/shared';
 import {
   CharactersCard,
-  type ICharacterFilters,
   PanelFilters,
 } from '@/widgets';
 
 import './CharactersList.css';
 
 export const CharactersList = () => {
-  const [filters, setFilters] = useState<ICharacterFilters>({
-    name: '',
-    species: '',
-    status: '',
-    gender: '',
-  });
   const { characters, loading } = useCharacters();
+  const { filters, setFilters, filteredCharacters } = useCharacterFilters(characters)
 
   return (
     <section className='characters'>
@@ -41,16 +33,10 @@ export const CharactersList = () => {
               />
             </li>
           ) : (
-            characters.map((character) => (
+             filteredCharacters.map((character) => (
               <li key={character.id}>
                 <CharactersCard
-                  id={character.id}
-                  name={character.name}
-                  gender={character.gender}
-                  image={character.image}
-                  location={character.location}
-                  species={character.species}
-                  status={character.status}
+                  {...character}
                 />
               </li>
             ))
