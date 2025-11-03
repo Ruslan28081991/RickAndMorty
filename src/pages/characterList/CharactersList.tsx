@@ -1,16 +1,14 @@
 import title from '@/assets/images/title.png';
 import { useCharacterFilters, useCharacters } from '@/hooks';
 import { Loading } from '@/shared';
-import {
-  CharactersCard,
-  PanelFilters,
-} from '@/widgets';
+import { CharactersCard, PanelFilters } from '@/widgets';
 
 import './CharactersList.css';
 
 export const CharactersList = () => {
   const { characters, loading } = useCharacters();
-  const { filters, setFilters, filteredCharacters } = useCharacterFilters(characters)
+  const { filters, setFilters, filteredCharacters } =
+    useCharacterFilters(characters);
 
   return (
     <section className='characters'>
@@ -33,11 +31,9 @@ export const CharactersList = () => {
               />
             </li>
           ) : (
-             filteredCharacters.map((character) => (
+            filteredCharacters.map((character) => (
               <li key={character.id}>
-                <CharactersCard
-                  {...character}
-                />
+                <CharactersCard {...character} />
               </li>
             ))
           )}
