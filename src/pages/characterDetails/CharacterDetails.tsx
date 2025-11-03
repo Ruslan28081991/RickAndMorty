@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-import arrow from '@/assets/images/arrow.png';
+import { ArrowBack } from '@/assets/img';
 import { Loading } from '@/shared';
 
 import './CharacterDetails.css';
@@ -14,7 +14,7 @@ export const CharacterDetails = () => {
       >
         <img
           className='details-container__img'
-          src={arrow}
+          src={ArrowBack}
           alt='arrow back'
         />
         <h3 className='details-container__text'>GO BACK</h3>

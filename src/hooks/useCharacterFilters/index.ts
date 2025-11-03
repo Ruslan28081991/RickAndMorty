@@ -1,1 +1,1 @@
-export * from './useCharacterFilters'
+export * from './useCharacterFilters';

@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import cn from 'classnames';
 
-import IconArrowDown from '@/assets/images/arrowDown.svg?react';
-import IconArrowDownSmall from '@/assets/images/arrowDownSmall.svg?react';
-import IconArrowUp from '@/assets/images/arrowUp.svg?react';
-import IconArrowUpSmall from '@/assets/images/arrowUpSmall.svg?react';
+import {
+  ArrowDownIcon,
+  ArrowDownSmallIcon,
+  ArrowUpIcon,
+  ArrowUpSmallIcon,
+} from '@/assets/icons';
 
 import './Select.css';
 
@@ -53,9 +55,9 @@ export const Select = <T extends string>({
 
   const getArrowIcon = () => {
     if (size === 'small') {
-      return isOpenSelect ? <IconArrowUpSmall /> : <IconArrowDownSmall />;
+      return isOpenSelect ? <ArrowUpSmallIcon /> : <ArrowDownSmallIcon />;
     } else {
-      return isOpenSelect ? <IconArrowUp /> : <IconArrowDown />;
+      return isOpenSelect ? <ArrowUpIcon /> : <ArrowDownIcon />;
     }
   };
 

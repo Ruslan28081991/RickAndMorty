@@ -1,4 +1,4 @@
-import SearchIcon from '@/assets/images/search.svg?react';
+import { SearchIcon } from '@/assets/icons';
 import {
   GENDER_OPTIONS,
   Input,

@@ -1,6 +1,7 @@
-import title from '@/assets/images/title.png';
+import { Title } from '@/assets/img';
 import { useCharacterFilters, useCharacters } from '@/hooks';
 import { Loading } from '@/shared';
+import { LazyLoad } from '@/shared/components/lazyLoad';
 import { CharactersCard, PanelFilters } from '@/widgets';
 
 import './CharactersList.css';
@@ -14,7 +15,7 @@ export const CharactersList = () => {
     <section className='characters'>
       <img
         className='characters__image'
-        src={title}
+        src={Title}
         alt='Main picture'
       />
       <div className='characters__list'>
@@ -31,11 +32,9 @@ export const CharactersList = () => {
               />
             </li>
           ) : (
-            filteredCharacters.map((character) => (
-              <li key={character.id}>
-                <CharactersCard {...character} />
-              </li>
-            ))
+            <LazyLoad items={filteredCharacters}>
+              {(character) => <CharactersCard {...character} />}
+            </LazyLoad>
           )}
         </ul>
       </div>

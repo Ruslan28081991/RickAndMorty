@@ -2,9 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import cn from 'classnames';
 
-import IconClose from '@/assets/images/close.svg?react';
-import IconConfirm from '@/assets/images/confirm.svg?react';
-import IconEdit from '@/assets/images/edit.svg?react';
+import { CloseIcon, ConfirmIcon, EditIcon } from '@/assets/icons';
 import { Input, Select, Status, STATUS_OPTIONS, type TStatus } from '@/shared';
 
 import './CharactersCard.css';
@@ -101,13 +99,13 @@ export const CharactersCard = ({
                   className='characterCard__button'
                   onClick={handleCancel}
                 >
-                  <IconClose aria-label='Cancel icon' />
+                  <CloseIcon aria-label='Cancel icon' />
                 </button>
                 <button
                   className='characterCard__button'
                   onClick={handleConfirm}
                 >
-                  <IconConfirm aria-label='Confirm icon' />
+                  <ConfirmIcon aria-label='Confirm icon' />
                 </button>
               </>
             ) : (
@@ -115,7 +113,7 @@ export const CharactersCard = ({
                 className='characterCard__button'
                 onClick={handleEdit}
               >
-                <IconEdit aria-label='Edit icon' />
+                <EditIcon aria-label='Edit icon' />
               </button>
             )}
           </div>

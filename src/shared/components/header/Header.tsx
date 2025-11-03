@@ -1,4 +1,4 @@
-import logo from '@/assets/images/logo.png';
+import { Logo } from '@/assets/img';
 
 import './Header.css';
 
@@ -7,7 +7,7 @@ export const Header = () => {
     <header className='header'>
       <img
         className='header__logo'
-        src={logo}
+        src={Logo}
         alt='logo'
       />
     </header>
