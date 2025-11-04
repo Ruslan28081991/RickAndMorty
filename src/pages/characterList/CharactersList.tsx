@@ -1,7 +1,6 @@
 import { Title } from '@/assets/img';
 import { useCharacterFilters, useCharacters } from '@/hooks';
-import { Loading } from '@/shared';
-import { LazyLoad } from '@/shared/components/lazyLoad';
+import { LazyLoad, Loading } from '@/shared';
 import { CharactersCard, PanelFilters } from '@/widgets';
 
 import './CharactersList.css';

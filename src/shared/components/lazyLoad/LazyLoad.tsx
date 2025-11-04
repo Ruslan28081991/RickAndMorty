@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 
+import { useThrottle } from '@/hooks';
 import { Loading } from '@/shared';
 import type { ICharacters } from '@/widgets';
 
@@ -12,32 +13,33 @@ export const LazyLoad = ({ items, children }: ILazyLoad) => {
   const [visibleCount, setVisibleCount] = useState(4);
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (
-        window.innerHeight + window.scrollY >=
-        document.body.offsetHeight - 50
-      ) {
-        if (visibleCount < items.length) {
-          setIsLoading(true);
-          setTimeout(() => {
-            setVisibleCount((prevCount) =>
-              Math.min(prevCount + 4, items.length)
-            );
-            setIsLoading(false);
-          }, 300);
-        }
+  const handleScroll = () => {
+    if (
+      window.innerHeight + window.scrollY >=
+      document.body.offsetHeight - 50
+    ) {
+      if (visibleCount < items.length) {
+        setIsLoading(true);
+        setTimeout(() => {
+          setVisibleCount((prevCount) => Math.min(prevCount + 4, items.length));
+          setIsLoading(false);
+        }, 300);
       }
-    };
+    }
+  };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [items.length, visibleCount, isLoading]);
+  const throttledHandleScroll = useThrottle(handleScroll, 200);
+  useEffect(() => {
+    window.addEventListener('scroll', throttledHandleScroll);
+    return () => {
+      window.removeEventListener('scroll', throttledHandleScroll);
+    };
+  }, [throttledHandleScroll]);
 
   return (
-    <div className='characters__container'>
+    <>
       {items.slice(0, visibleCount).map((item) => (
-        <div key={item.id}>{children(item)}</div>
+        <li key={item.id}>{children(item)}</li>
       ))}
 
       {isLoading && (
@@ -45,6 +47,6 @@ export const LazyLoad = ({ items, children }: ILazyLoad) => {
           <Loading size='small' />
         </div>
       )}
-    </div>
+    </>
   );
 };
