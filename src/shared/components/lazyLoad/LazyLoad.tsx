@@ -21,13 +21,6 @@ export const LazyLoad = ({
   children,
 }: ILazyLoad) => {
   const handleScroll = () => {
-    console.log('Scroll detected', {
-      isLoadingMore,
-      hasMore,
-      scrollPosition: window.innerHeight + window.scrollY,
-      documentHeight: document.body.offsetHeight,
-    });
-
     if (isLoadingMore) return;
 
     if (

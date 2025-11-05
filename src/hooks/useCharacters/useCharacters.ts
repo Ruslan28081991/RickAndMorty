@@ -9,20 +9,26 @@ export const useCharacters = () => {
   const [characters, setCharacters] = useState<ICharacters[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [isLoadingMore, setIsLoadingMore] = useState<boolean>(false);
-  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [nextPage, setNextPage] = useState<number>(2);
   const [hasMore, setHasMore] = useState<boolean>(true);
+
+  const loadPage = async (page: number) => {
+    const data = await charactersAPI.getCharacters(page);
+    const isLastPage = data.length < 20;
+
+    setCharacters((prev) => (page === 1 ? data : [...prev, ...data]));
+    setNextPage(page + 1);
+    setHasMore(!isLastPage);
+  };
 
   useEffect(() => {
     const abortController = new AbortController();
 
-    const fetchFirstPage = async () => {
+    const fetchData = async () => {
       try {
-        const { results, info } = await charactersAPI.getCharacters(1);
-        setCharacters(results);
-        setHasMore(info.next !== null);
+        await loadPage(1);
       } catch (error) {
         if (axios.isCancel(error)) {
-          console.log('Request canceled:', error.message);
           return;
         }
         toast.error('Не удалось загрузить список персонажей');
@@ -30,7 +36,7 @@ export const useCharacters = () => {
         setLoading(false);
       }
     };
-    fetchFirstPage();
+    fetchData();
 
     return () => {
       abortController.abort();
@@ -43,15 +49,9 @@ export const useCharacters = () => {
     setIsLoadingMore(true);
 
     try {
-      const nextPage = currentPage + 1;
-      const { results, info } = await charactersAPI.getCharacters(nextPage);
-
-      setCharacters((prev) => [...prev, ...results]);
-      setCurrentPage(nextPage);
-      setHasMore(info.next !== null);
+      await loadPage(nextPage);
     } catch (error) {
       if (axios.isCancel(error)) {
-        console.log('Request canceled:', error.message);
         return;
       }
       toast.error('Не удалось загрузить дополнительных персонажей');
