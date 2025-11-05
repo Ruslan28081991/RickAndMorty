@@ -1,34 +1,46 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import { useThrottle } from '@/hooks';
 import { Loading } from '@/shared';
+import { SCROLL_THRESHOLD, THROTTLE_DELAY } from '@/shared/constants';
 import type { ICharacters } from '@/widgets';
 
 interface ILazyLoad {
   items: ICharacters[];
+  hasMore: boolean;
+  isLoadingMore: boolean;
+  onLoadNextPage: () => void;
   children: (item: ICharacters) => React.ReactNode;
 }
 
-export const LazyLoad = ({ items, children }: ILazyLoad) => {
-  const [visibleCount, setVisibleCount] = useState(4);
-  const [isLoading, setIsLoading] = useState(false);
-
+export const LazyLoad = ({
+  items,
+  hasMore,
+  isLoadingMore,
+  onLoadNextPage,
+  children,
+}: ILazyLoad) => {
   const handleScroll = () => {
+    console.log('Scroll detected', {
+      isLoadingMore,
+      hasMore,
+      scrollPosition: window.innerHeight + window.scrollY,
+      documentHeight: document.body.offsetHeight,
+    });
+
+    if (isLoadingMore) return;
+
     if (
       window.innerHeight + window.scrollY >=
-      document.body.offsetHeight - 50
+        document.body.offsetHeight - SCROLL_THRESHOLD &&
+      hasMore
     ) {
-      if (visibleCount < items.length) {
-        setIsLoading(true);
-        setTimeout(() => {
-          setVisibleCount((prevCount) => Math.min(prevCount + 4, items.length));
-          setIsLoading(false);
-        }, 300);
-      }
+      onLoadNextPage();
     }
   };
 
-  const throttledHandleScroll = useThrottle(handleScroll, 200);
+  const throttledHandleScroll = useThrottle(handleScroll, THROTTLE_DELAY);
+
   useEffect(() => {
     window.addEventListener('scroll', throttledHandleScroll);
     return () => {
@@ -38,11 +50,11 @@ export const LazyLoad = ({ items, children }: ILazyLoad) => {
 
   return (
     <>
-      {items.slice(0, visibleCount).map((item) => (
+      {items.map((item) => (
         <li key={item.id}>{children(item)}</li>
       ))}
 
-      {isLoading && (
+      {isLoadingMore && (
         <div className='characters__loading'>
           <Loading size='small' />
         </div>
