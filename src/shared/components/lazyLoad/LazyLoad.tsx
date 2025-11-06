@@ -43,8 +43,8 @@ export const LazyLoad = ({
 
   return (
     <>
-      {items.map((item) => (
-        <li key={item.id}>{children(item)}</li>
+      {items.map((item, index) => (
+        <li key={`${item.id}-${index}`}>{children(item)}</li>
       ))}
 
       {isLoadingMore && (
