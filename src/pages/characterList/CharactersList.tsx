@@ -1,12 +1,13 @@
-import title from '@/assets/images/title.png';
+import { Title } from '@/assets/img';
 import { useCharacterFilters, useCharacters } from '@/hooks';
-import { Loading } from '@/shared';
+import { LazyLoad, Loading } from '@/shared';
 import { CharactersCard, PanelFilters } from '@/widgets';
 
 import './CharactersList.css';
 
 export const CharactersList = () => {
-  const { characters, loading } = useCharacters();
+  const { characters, loading, isLoadingMore, hasMore, loadNextPage } =
+    useCharacters();
   const { filters, setFilters, filteredCharacters } =
     useCharacterFilters(characters);
 
@@ -14,7 +15,7 @@ export const CharactersList = () => {
     <section className='characters'>
       <img
         className='characters__image'
-        src={title}
+        src={Title}
         alt='Main picture'
       />
       <div className='characters__list'>
@@ -31,11 +32,14 @@ export const CharactersList = () => {
               />
             </li>
           ) : (
-            filteredCharacters.map((character) => (
-              <li key={character.id}>
-                <CharactersCard {...character} />
-              </li>
-            ))
+            <LazyLoad
+              items={filteredCharacters}
+              hasMore={hasMore}
+              isLoadingMore={isLoadingMore}
+              onLoadNextPage={loadNextPage}
+            >
+              {(character) => <CharactersCard {...character} />}
+            </LazyLoad>
           )}
         </ul>
       </div>

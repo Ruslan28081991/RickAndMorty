@@ -8,17 +8,27 @@ import { type ICharacters } from '@/widgets';
 export const useCharacters = () => {
   const [characters, setCharacters] = useState<ICharacters[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [isLoadingMore, setIsLoadingMore] = useState<boolean>(false);
+  const [nextPage, setNextPage] = useState<number>(2);
+  const [hasMore, setHasMore] = useState<boolean>(true);
+
+  const loadPage = async (page: number) => {
+    const data = await charactersAPI.getCharacters(page);
+    const isLastPage = data.length < 20;
+
+    setCharacters((prev) => (page === 1 ? data : [...prev, ...data]));
+    setNextPage(page + 1);
+    setHasMore(!isLastPage);
+  };
 
   useEffect(() => {
     const abortController = new AbortController();
 
     const fetchData = async () => {
       try {
-        const data = await charactersAPI.getCharacters();
-        setCharacters(data);
+        await loadPage(1);
       } catch (error) {
         if (axios.isCancel(error)) {
-          console.log('Request canceled:', error.message);
           return;
         }
         toast.error('Не удалось загрузить список персонажей');
@@ -33,5 +43,28 @@ export const useCharacters = () => {
     };
   }, []);
 
-  return { characters, loading };
+  const loadNextPage = async () => {
+    if (isLoadingMore || !hasMore) return;
+
+    setIsLoadingMore(true);
+
+    try {
+      await loadPage(nextPage);
+    } catch (error) {
+      if (axios.isCancel(error)) {
+        return;
+      }
+      toast.error('Не удалось загрузить дополнительных персонажей');
+    } finally {
+      setIsLoadingMore(false);
+    }
+  };
+
+  return {
+    characters,
+    loading,
+    isLoadingMore,
+    hasMore,
+    loadNextPage,
+  };
 };

@@ -1,6 +1,6 @@
 import cn from 'classnames';
 
-import loading from '@/assets/images/loading.png';
+import { LoadingImg } from '@/assets/img';
 
 import './Loading.css';
 
@@ -14,7 +14,7 @@ export const Loading = ({ text, size = 'large' }: ILoading) => {
     <div className={cn('loading', `loading_${size}`)}>
       <img
         className='loading__image'
-        src={loading}
+        src={LoadingImg}
         alt='loading'
       />
       <h3 className='loading__text'>{text}</h3>
