@@ -15,4 +15,15 @@ export const charactersAPI = {
 
     return characters;
   },
+
+  getCharacterById: async (id: number): Promise<ICharacters> => {
+    const response = await axios.get(
+      `https://rickandmortyapi.com/api/character/${id}`
+    );
+    if (!response.data) {
+      throw new Error(`Персонаж с ID ${id} не найден`);
+    }
+
+    return response.data;
+  },
 };

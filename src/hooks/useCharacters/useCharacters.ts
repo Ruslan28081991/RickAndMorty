@@ -11,6 +11,8 @@ export const useCharacters = () => {
   const [isLoadingMore, setIsLoadingMore] = useState<boolean>(false);
   const [nextPage, setNextPage] = useState<number>(2);
   const [hasMore, setHasMore] = useState<boolean>(true);
+  const [selectedCharacter, setSelectedCharacter] =
+    useState<ICharacters | null>(null);
 
   const loadPage = async (page: number) => {
     const data = await charactersAPI.getCharacters(page);
@@ -60,11 +62,26 @@ export const useCharacters = () => {
     }
   };
 
+  const loadCharacterById = async (id: number) => {
+    try {
+      const character = await charactersAPI.getCharacterById(id);
+      setSelectedCharacter(character);
+    } catch (error) {
+      if (axios.isCancel(error)) {
+        return;
+      }
+      setSelectedCharacter(null);
+      toast.error(`Персонаж с ID ${id} не найден`);
+    }
+  };
+
   return {
     characters,
     loading,
     isLoadingMore,
     hasMore,
     loadNextPage,
+    selectedCharacter,
+    loadCharacterById,
   };
 };
