@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
 import { charactersAPI } from '@/api';
@@ -13,6 +14,7 @@ export const useCharacters = () => {
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [selectedCharacter, setSelectedCharacter] =
     useState<ICharacters | null>(null);
+  const { id } = useParams();
 
   const loadPage = async (page: number) => {
     const data = await charactersAPI.getCharacters(page);
@@ -75,6 +77,15 @@ export const useCharacters = () => {
     }
   };
 
+  useEffect(() => {
+    if (id) {
+      const loadData = async () => {
+        await loadCharacterById(Number(id));
+      };
+      loadData();
+    }
+  }, [id]);
+
   return {
     characters,
     loading,
@@ -82,6 +93,5 @@ export const useCharacters = () => {
     hasMore,
     loadNextPage,
     selectedCharacter,
-    loadCharacterById,
   };
 };

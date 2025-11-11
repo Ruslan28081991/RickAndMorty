@@ -36,8 +36,7 @@
 }
 
 .characterDetails__name {
-  margin: 0;
-  margin-bottom: 50px;
+  margin: 0 0 50px;
   text-align: center;
   font-size: 48px;
   font-weight: 400;
@@ -71,8 +70,7 @@
 }
 
 .characterDetails__item-text {
-  margin: 0;
-  margin-bottom: 5px;
+  margin: 0 0 5px;
   padding: 5px 0;
   border-bottom: 1px solid #f2f2f7;
   width: 100%;

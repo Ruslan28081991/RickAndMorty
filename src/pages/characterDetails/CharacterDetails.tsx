@@ -1,5 +1,4 @@
-import { useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { ArrowBack } from '@/assets/img';
 import { useCharacters } from '@/hooks';
@@ -8,17 +7,7 @@ import { Loading } from '@/shared';
 import './CharacterDetails.css';
 
 export const CharacterDetails = () => {
-  const { selectedCharacter, loadCharacterById } = useCharacters();
-  const { id } = useParams();
-
-  useEffect(() => {
-    if (id) {
-      const loadData = async () => {
-        await loadCharacterById(Number(id));
-      };
-      loadData();
-    }
-  }, [id, loadCharacterById]);
+  const { selectedCharacter } = useCharacters();
 
   return (
     <>
