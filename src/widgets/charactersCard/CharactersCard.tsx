@@ -18,9 +18,14 @@ export interface ICharacters {
   };
   status: TStatus;
   image: string;
+  type: string;
+  origin: {
+    name: string;
+  };
 }
 
 export const CharactersCard = ({
+  id,
   name,
   gender,
   species,
@@ -86,7 +91,7 @@ export const CharactersCard = ({
           ) : (
             <Link
               className='characterCard__name'
-              to='/character'
+              to={`/character/${id}`}
             >
               {currentName}
             </Link>

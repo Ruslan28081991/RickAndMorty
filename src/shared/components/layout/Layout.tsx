@@ -16,7 +16,7 @@ export const Layout = () => {
             element={<CharactersList />}
           />
           <Route
-            path='/cha'
+            path='/character/:id'
             element={<CharacterDetails />}
           />
         </Routes>

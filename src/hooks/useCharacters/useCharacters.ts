@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
 import { charactersAPI } from '@/api';
@@ -11,6 +12,9 @@ export const useCharacters = () => {
   const [isLoadingMore, setIsLoadingMore] = useState<boolean>(false);
   const [nextPage, setNextPage] = useState<number>(2);
   const [hasMore, setHasMore] = useState<boolean>(true);
+  const [selectedCharacter, setSelectedCharacter] =
+    useState<ICharacters | null>(null);
+  const { id } = useParams();
 
   const loadPage = async (page: number) => {
     const data = await charactersAPI.getCharacters(page);
@@ -31,7 +35,7 @@ export const useCharacters = () => {
         if (axios.isCancel(error)) {
           return;
         }
-        toast.error('Не удалось загрузить список персонажей');
+        toast.error('Failed to load character list');
       } finally {
         setLoading(false);
       }
@@ -54,11 +58,33 @@ export const useCharacters = () => {
       if (axios.isCancel(error)) {
         return;
       }
-      toast.error('Не удалось загрузить дополнительных персонажей');
+      toast.error('Failed to load additional characters');
     } finally {
       setIsLoadingMore(false);
     }
   };
+
+  const loadCharacterById = async (id: number) => {
+    try {
+      const character = await charactersAPI.getCharacterById(id);
+      setSelectedCharacter(character);
+    } catch (error) {
+      if (axios.isCancel(error)) {
+        return;
+      }
+      setSelectedCharacter(null);
+      toast.error(`Character with ID: ${id} not found`);
+    }
+  };
+
+  useEffect(() => {
+    if (id) {
+      const loadData = async () => {
+        await loadCharacterById(Number(id));
+      };
+      loadData();
+    }
+  }, [id]);
 
   return {
     characters,
@@ -66,5 +92,6 @@ export const useCharacters = () => {
     isLoadingMore,
     hasMore,
     loadNextPage,
+    selectedCharacter,
   };
 };

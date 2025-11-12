@@ -1,4 +1,10 @@
-.details-container {
+.characterDetails {
+  display: flex;
+  justify-content: center;
+}
+
+.characterDetails__btn {
+  margin-left: 210px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -8,6 +14,69 @@
   color: black;
 }
 
-.details-container__text {
+.characterDetails__btn-text {
   font-family: 'Karla', sans-serif;
+}
+
+.characterDetails__wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.characterDetails__image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  border: 5px solid #f2f2f7;
+}
+
+.characterDetails__name {
+  margin: 0 0 50px;
+  text-align: center;
+  font-size: 48px;
+  font-weight: 400;
+  line-height: 100%;
+}
+
+.characterDetails__title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: 0.15px;
+  color: #8e8e93;
+}
+
+.characterDetails__list {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+.characterDetails__item {
+  padding: 5px 0;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.15px;
+}
+
+.characterDetails__item-text {
+  margin: 0 0 5px;
+  padding: 5px 0;
+  border-bottom: 1px solid #f2f2f7;
+  width: 100%;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.25px;
+  color: #6e798c;
 }
