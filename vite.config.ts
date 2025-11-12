@@ -1,7 +1,7 @@
-import react from '@vitejs/plugin-react'
-import path from 'path'
-import { defineConfig } from 'vite'
-import svgr from 'vite-plugin-svgr'
+import react from '@vitejs/plugin-react';
+import path from 'path';
+import { defineConfig } from 'vite';
+import svgr from 'vite-plugin-svgr';
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -10,9 +10,10 @@ export default defineConfig({
     svgr({
       svgrOptions: {
         icon: true,
-      }
-    })
+      },
+    }),
   ],
+  base: '/RickAndMorty/',
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),
@@ -23,6 +24,6 @@ export default defineConfig({
       shared: path.resolve(__dirname, 'src/shared'),
       stores: path.resolve(__dirname, 'src/stores'),
       widgets: path.resolve(__dirname, 'src/widgets'),
-    }
-  }
-})
+    },
+  },
+});
