@@ -19,7 +19,7 @@ export const charactersAPI = {
   getCharacterById: async (id: number): Promise<ICharacters> => {
     const response = await axios.get(`/${id}`);
     if (!response.data) {
-      throw new Error(`Персонаж с ID ${id} не найден`);
+      throw new Error(`Character with ID: ${id} not found`);
     }
 
     return response.data;

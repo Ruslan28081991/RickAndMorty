@@ -35,7 +35,7 @@ export const useCharacters = () => {
         if (axios.isCancel(error)) {
           return;
         }
-        toast.error('Не удалось загрузить список персонажей');
+        toast.error('Failed to load character list');
       } finally {
         setLoading(false);
       }
@@ -58,7 +58,7 @@ export const useCharacters = () => {
       if (axios.isCancel(error)) {
         return;
       }
-      toast.error('Не удалось загрузить дополнительных персонажей');
+      toast.error('Failed to load additional characters');
     } finally {
       setIsLoadingMore(false);
     }
@@ -73,7 +73,7 @@ export const useCharacters = () => {
         return;
       }
       setSelectedCharacter(null);
-      toast.error(`Персонаж с ID ${id} не найден`);
+      toast.error(`Character with ID: ${id} not found`);
     }
   };
 
