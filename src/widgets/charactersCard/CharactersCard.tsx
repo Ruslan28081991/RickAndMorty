@@ -51,9 +51,6 @@ export const CharactersCard = ({
   };
 
   const handleCancel = () => {
-    setCurrentName(name);
-    setCurrentLocation(location.name);
-    setStatusValue(status!);
     setIsEdit(false);
   };
 
@@ -139,7 +136,7 @@ export const CharactersCard = ({
                 onChange={handleLocationChange}
               />
             ) : (
-              <span>{location.name}</span>
+              <span>{currentLocation}</span>
             )}
           </dd>
 
