@@ -41,6 +41,11 @@ export const CharactersList = () => {
               {(character) => <CharactersCard {...character} />}
             </LazyLoad>
           )}
+          {filteredCharacters.length === 0 ? (
+            <div className='characters__empty'>Список персонажей пуст...</div>
+          ) : (
+            ''
+          )}
         </ul>
       </div>
     </section>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 import { charactersAPI } from '@/api';
@@ -15,6 +15,7 @@ export const useCharacters = () => {
   const [selectedCharacter, setSelectedCharacter] =
     useState<ICharacters | null>(null);
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const loadPage = async (page: number) => {
     const data = await charactersAPI.getCharacters(page);
@@ -70,6 +71,10 @@ export const useCharacters = () => {
       setSelectedCharacter(character);
     } catch (error) {
       if (axios.isCancel(error)) {
+        return;
+      }
+      if (axios.isAxiosError(error) && error.response?.status === 404) {
+        navigate('/404');
         return;
       }
       setSelectedCharacter(null);

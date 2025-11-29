@@ -1,0 +1,30 @@
+.error-page {
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.error-page__img {
+  width: 540px;
+  height: 333px;
+}
+
+.error-page__btn {
+  margin-top: 80px;
+  padding: 8px 16px;
+  width: 240px;
+  height: 56px;
+  border: 1px solid #00000061;
+  border-radius: 10px;
+  text-decoration: none;
+  font-family: 'Karla', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 100%;
+  color: #000000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
