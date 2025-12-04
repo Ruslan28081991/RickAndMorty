@@ -1,11 +1,11 @@
 # Rick and Morty
 
-[![Live Demo](https://img.shields.io/badge/ДЕМО-Запустить_сайт-green?style=for-the-badge)](https://ruslan28081991.github.io/RickAndMorty/)
 [![React](https://img.shields.io/badge/React-19-blue?style=for-the-badge&logo=react)](https://reactjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.8-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
 
 Веб-приложение для просмотра персонажей вселенной Рика и Морти с удобным поиском и редактированием.
 
+## 🌐 Демо
 [Посмотреть сайт](https://ruslan28081991.github.io/RickAndMorty/)
 
 ## ✨ Возможности
@@ -70,6 +70,7 @@ npm run deploy
   
 ### 🔗 API
 Проект использует The Rick and Morty API для получения данных о персонажах.
+
 
 
 
