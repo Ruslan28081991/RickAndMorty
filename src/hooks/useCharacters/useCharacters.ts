@@ -8,10 +8,10 @@ import { type ICharacters } from '@/widgets';
 
 export const useCharacters = () => {
   const [characters, setCharacters] = useState<ICharacters[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isLoadingMore, setIsLoadingMore] = useState<boolean>(false);
   const [nextPage, setNextPage] = useState<number>(2);
-  const [hasMore, setHasMore] = useState<boolean>(true);
+  const [isHasMore, setIsHasMore] = useState<boolean>(true);
   const [selectedCharacter, setSelectedCharacter] =
     useState<ICharacters | null>(null);
   const { id } = useParams();
@@ -23,7 +23,7 @@ export const useCharacters = () => {
 
     setCharacters((prev) => (page === 1 ? data : [...prev, ...data]));
     setNextPage(page + 1);
-    setHasMore(!isLastPage);
+    setIsHasMore(!isLastPage);
   };
 
   useEffect(() => {
@@ -38,7 +38,7 @@ export const useCharacters = () => {
         }
         toast.error('Failed to load character list');
       } finally {
-        setLoading(false);
+        setIsLoading(false);
       }
     };
     fetchData();
@@ -49,7 +49,7 @@ export const useCharacters = () => {
   }, []);
 
   const loadNextPage = async () => {
-    if (isLoadingMore || !hasMore) return;
+    if (isLoadingMore || !isHasMore) return;
 
     setIsLoadingMore(true);
 
@@ -93,9 +93,9 @@ export const useCharacters = () => {
 
   return {
     characters,
-    loading,
+    loading: isLoading,
     isLoadingMore,
-    hasMore,
+    hasMore: isHasMore,
     loadNextPage,
     selectedCharacter,
   };
