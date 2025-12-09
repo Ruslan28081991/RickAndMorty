@@ -7,7 +7,7 @@ import type { ICharacters } from '@/widgets';
 
 interface ILazyLoad {
   items: ICharacters[];
-  hasMore: boolean;
+  isHasMore: boolean;
   isLoadingMore: boolean;
   onLoadNextPage: () => void;
   children: (item: ICharacters) => React.ReactNode;
@@ -15,7 +15,7 @@ interface ILazyLoad {
 
 export const LazyLoad = ({
   items,
-  hasMore,
+  isHasMore,
   isLoadingMore,
   onLoadNextPage,
   children,
@@ -26,7 +26,7 @@ export const LazyLoad = ({
     if (
       window.innerHeight + window.scrollY >=
         document.body.offsetHeight - SCROLL_THRESHOLD &&
-      hasMore
+      isHasMore
     ) {
       onLoadNextPage();
     }

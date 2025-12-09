@@ -49,6 +49,12 @@ export const useCharacters = () => {
   }, []);
 
   const loadNextPage = async () => {
+    console.log('🔄 loadNextPage called:', {
+      isLoadingMore,
+      isHasMore,
+      nextPage,
+      charactersCount: characters.length,
+    });
     if (isLoadingMore || !isHasMore) return;
 
     setIsLoadingMore(true);
@@ -93,9 +99,9 @@ export const useCharacters = () => {
 
   return {
     characters,
-    loading: isLoading,
+    isLoading,
     isLoadingMore,
-    hasMore: isHasMore,
+    isHasMore,
     loadNextPage,
     selectedCharacter,
   };

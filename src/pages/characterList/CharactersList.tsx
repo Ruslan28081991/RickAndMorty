@@ -6,7 +6,7 @@ import { CharactersCard, PanelFilters } from '@/widgets';
 import './CharactersList.css';
 
 export const CharactersList = () => {
-  const { characters, loading, isLoadingMore, hasMore, loadNextPage } =
+  const { characters, isLoading, isLoadingMore, isHasMore, loadNextPage } =
     useCharacters();
   const { filters, setFilters, filteredCharacters } =
     useCharacterFilters(characters);
@@ -24,7 +24,7 @@ export const CharactersList = () => {
           onChangeFilters={setFilters}
         />
         <ul className='characters__container'>
-          {loading ? (
+          {isLoading ? (
             <li className='characters__loading'>
               <Loading
                 size='large'
@@ -34,7 +34,7 @@ export const CharactersList = () => {
           ) : (
             <LazyLoad
               items={filteredCharacters}
-              hasMore={hasMore}
+              isHasMore={isHasMore}
               isLoadingMore={isLoadingMore}
               onLoadNextPage={loadNextPage}
             >
