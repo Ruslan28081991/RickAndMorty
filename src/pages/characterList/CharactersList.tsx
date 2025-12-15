@@ -8,8 +8,10 @@ import './CharactersList.css';
 export const CharactersList = () => {
   const { characters, isLoading, isLoadingMore, isHasMore, loadNextPage } =
     useCharacters();
-  const { filters, setFilters, filteredCharacters } =
+  const { filters, setFilters, filteredCharacters, isUsingApiSearch } =
     useCharacterFilters(characters);
+
+  const shouldLoadMore = isHasMore && !isUsingApiSearch;
 
   return (
     <section className='characters'>
@@ -34,7 +36,7 @@ export const CharactersList = () => {
           ) : (
             <LazyLoad
               items={filteredCharacters}
-              isHasMore={isHasMore}
+              isHasMore={shouldLoadMore}
               isLoadingMore={isLoadingMore}
               onLoadNextPage={loadNextPage}
             >

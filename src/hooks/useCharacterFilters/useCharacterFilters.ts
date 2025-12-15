@@ -1,71 +1,65 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useMemo } from 'react';
 
-import { DEBOUNCE_DELAY } from '@/shared/constants';
 import type { ICharacterFilters, ICharacters } from '@/widgets';
 
-import { useDebounce } from '../useDebounce';
+import { useCharacterSearch } from '../useCharacterSearch';
+import { useUrlFilters } from '../useUrlFilters';
 
 export const useCharacterFilters = (characters: ICharacters[] = []) => {
-  const [filters, setFilters] = useState<ICharacterFilters>({
-    name: '',
-    species: '',
-    gender: '',
-    status: '',
-  });
-  //
-  const [searchResults, setSearchResults] = useState([]);
-  const [isSearching, setIsSearching] = useState<boolean>(false);
-  //
-  const debouncedName = useDebounce(filters.name, DEBOUNCE_DELAY);
+  const { filters: urlFilters, updateUrl, resetFilters } = useUrlFilters();
+  const {
+    filters: searchFilters,
+    searchResults,
+    isSearching,
+    error,
+    updateFilter: updateSearchFilter,
+  } = useCharacterSearch({ initialFilters: urlFilters });
 
-  useEffect(() => {
-    if (!debouncedName?.trim()) {
-      setSearchResults([]);
-      return;
+  const updateFilter = (key: string, value: string | undefined) => {
+    updateSearchFilter(key, value);
+    const newFilters = { ...searchFilters, [key]: value };
+    updateUrl(newFilters);
+  };
+
+  const setFilters = (newFilters: ICharacterFilters) => {
+    Object.entries(newFilters).forEach(([key, value]) => {
+      updateSearchFilter(key, value);
+    });
+    updateUrl(newFilters);
+  };
+
+  const locallyFilteredCharacters = useMemo(() => {
+    const hasNameSearch = searchFilters.name?.trim();
+
+    if (hasNameSearch) {
+      return [];
     }
 
-    const searchByName = async () => {
-      setIsSearching(true);
+    return characters.filter((character) => {
+      const matchesStatus =
+        !searchFilters.status || character.status === searchFilters.status;
+      const matchesGender =
+        !searchFilters.gender || character.gender === searchFilters.gender;
+      const matchesSpecies =
+        !searchFilters.species || character.species === searchFilters.species;
 
-      try {
-        const response = await axios.get(
-          `https://rickandmortyapi.com/api/character/?name=${debouncedName}`
-        );
+      return matchesStatus && matchesGender && matchesSpecies;
+    });
+  }, [characters, searchFilters]);
 
-        const filtered = response.data.results.filter(
-          (character: ICharacters) => {
-            const matchesSpecies =
-              !filters.species ||
-              character.species.toLowerCase() === filters.species.toLowerCase();
-            const matchesStatus =
-              !filters.status ||
-              character.status.toLowerCase() === filters.status.toLowerCase();
-            const matchesGender =
-              !filters.gender ||
-              character.gender.toLowerCase() === filters.gender.toLowerCase();
-
-            return matchesSpecies && matchesStatus && matchesGender;
-          }
-        );
-
-        setSearchResults(filtered);
-      } catch (error) {
-        if (axios.isAxiosError(error) && error.response?.status === 404) {
-          setSearchResults([]);
-        }
-      } finally {
-        setIsSearching(false);
-      }
-    };
-
-    searchByName();
-  }, [debouncedName, filters.status, filters.gender, filters.species]);
+  const displayCharacters = searchFilters.name?.trim()
+    ? searchResults
+    : locallyFilteredCharacters;
 
   return {
-    filters,
-    setFilters,
-    filteredCharacters: debouncedName ? searchResults : characters,
+    filters: searchFilters,
+    filteredCharacters: displayCharacters,
     isSearching,
+    error,
+    setFilters,
+    updateFilter,
+    resetFilters,
+    isUsingApiSearch: Boolean(searchFilters.name?.trim()),
+    totalResults: displayCharacters.length,
   };
 };
