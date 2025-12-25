@@ -1,37 +1,65 @@
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 
-import { DEBOUNCE_DELAY } from '@/shared/constants';
 import type { ICharacterFilters, ICharacters } from '@/widgets';
 
-import { useDebounce } from '../useDebounce';
+import { useCharacterSearch } from '../useCharacterSearch';
+import { useUrlFilters } from '../useUrlFilters';
 
 export const useCharacterFilters = (characters: ICharacters[] = []) => {
-  const [filters, setFilters] = useState<ICharacterFilters>({
-    name: '',
-    species: '',
-    gender: '',
-    status: '',
-  });
-  const debouncedName = useDebounce(filters.name, DEBOUNCE_DELAY);
+  const { filters: urlFilters, updateUrl, resetFilters } = useUrlFilters();
+  const {
+    filters: searchFilters,
+    searchResults,
+    isSearching,
+    error,
+    updateFilter: updateSearchFilter,
+  } = useCharacterSearch({ initialFilters: urlFilters });
 
-  const filteredCharacters = useMemo(() => {
-    return characters.filter((character) => {
-      const matchesName = character.name
-        .toLowerCase()
-        .includes((debouncedName || '').toLowerCase());
-      const matchesSpecies =
-        !filters.species ||
-        character.species.toLowerCase() === filters.species.toLowerCase();
-      const matchesStatus =
-        !filters.status ||
-        character.status.toLowerCase() === filters.status.toLowerCase();
-      const matchesGender =
-        !filters.gender ||
-        character.gender.toLowerCase() === filters.gender.toLowerCase();
+  const updateFilter = (key: string, value: string | undefined) => {
+    updateSearchFilter(key, value);
+    const newFilters = { ...searchFilters, [key]: value };
+    updateUrl(newFilters);
+  };
 
-      return matchesName && matchesSpecies && matchesStatus && matchesGender;
+  const setFilters = (newFilters: ICharacterFilters) => {
+    Object.entries(newFilters).forEach(([key, value]) => {
+      updateSearchFilter(key, value);
     });
-  }, [characters, filters, debouncedName]);
+    updateUrl(newFilters);
+  };
 
-  return { filters, setFilters, filteredCharacters };
+  const locallyFilteredCharacters = useMemo(() => {
+    const hasNameSearch = searchFilters.name?.trim();
+
+    if (hasNameSearch) {
+      return [];
+    }
+
+    return characters.filter((character) => {
+      const matchesStatus =
+        !searchFilters.status || character.status === searchFilters.status;
+      const matchesGender =
+        !searchFilters.gender || character.gender === searchFilters.gender;
+      const matchesSpecies =
+        !searchFilters.species || character.species === searchFilters.species;
+
+      return matchesStatus && matchesGender && matchesSpecies;
+    });
+  }, [characters, searchFilters]);
+
+  const displayCharacters = searchFilters.name?.trim()
+    ? searchResults
+    : locallyFilteredCharacters;
+
+  return {
+    filters: searchFilters,
+    filteredCharacters: displayCharacters,
+    isSearching,
+    error,
+    setFilters,
+    updateFilter,
+    resetFilters,
+    isUsingApiSearch: Boolean(searchFilters.name?.trim()),
+    totalResults: displayCharacters.length,
+  };
 };

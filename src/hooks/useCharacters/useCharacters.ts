@@ -93,9 +93,9 @@ export const useCharacters = () => {
 
   return {
     characters,
-    loading: isLoading,
+    isLoading,
     isLoadingMore,
-    hasMore: isHasMore,
+    isHasMore,
     loadNextPage,
     selectedCharacter,
   };
